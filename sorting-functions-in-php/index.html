@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>Sorting functions in PHP | JesusValera</title>
+
+
+
+<meta property="og:title" content="Sorting functions in PHP">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="In PHP there are multiple ways to sort a collection, and sometimes it’s not clear which method we should use. Let&#x27;s take a look at the alternatives.">
+<meta property="og:description" content="In PHP there are multiple ways to sort a collection, and sometimes it’s not clear which method we should use. Let&#x27;s take a look at the alternatives.">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/sorting-functions-in-php/">
+<meta property="og:url" content="https://jesusvalerareales.com/sorting-functions-in-php/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2021-08-18T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "In PHP there are multiple ways to sort a collection, and sometimes it’s not clear which method we should use. Let&#x27;s take a look at the alternatives.",
+  "url": "https://jesusvalerareales.com/sorting-functions-in-php/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Sorting functions in PHP"
+  
+    
+    
+      "datePublished":"2021-08-18T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/sorting-functions-in-php/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">Sorting functions in PHP</h1>
+    <h2 class="post-subtitle">And the Spaceship Operator 🚀🚀🚀</h2>
+    <small>
+      <time datetime="2021-08-18" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        August 18, 2021 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        10 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <p><img src="/images/2021-08-18/1.png" alt="rock-mountain-santiago-compostela" /></p>
+<span id="continue-reading"></span>
+<p>When dealing with PHP, there are multiple ways to sort a collection of items, and sometimes it’s not clear which method we should use and why.</p>
+<blockquote>
+<p>What is the difference between <em><code>sort()</code></em>, <em><code>arsort()</code></em> and <em><code>uasort()</code></em>?</p>
+</blockquote>
+<p>Before explaining the repercussions of <code>a</code>, <code>r</code>, <code>k</code> and <code>u</code> + <code>sort()</code> function, we need to know the very basic concept of lists and maps.</p>
+<h2 id="list">List</h2>
+<p>A list is an ordered collection.<br>
+The order is sequential starting from 0 and increasing 1 by 1 for each item.<br>
+It is also possible to have duplicated items in a list.<br></p>
+<pre style="background-color:#eff1f5;color:#4f5b66;"><code><span>$list = [&#39;Croatia&#39;, &#39;Belgium&#39;, &#39;Austria&#39;, &#39;Belgium&#39;, &#39;Denmark&#39;];
+</span><span>print_r($list);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [0] =&gt; Croatia
+</span><span>    [1] =&gt; Belgium
+</span><span>    [2] =&gt; Austria
+</span><span>    [3] =&gt; Belgium
+</span><span>    [4] =&gt; Denmark
+</span><span>)
+</span></code></pre>
+<h2 id="map-also-known-as-dictionaries">Map (also known as Dictionaries)</h2>
+<p>A map is an unordered collection.<br>
+Each element is composed of a key and a value.<br>
+It is not possible to have the same key more than once.<br></p>
+<pre style="background-color:#eff1f5;color:#4f5b66;"><code><span>$map = [
+</span><span>    &#39;Croatia&#39; =&gt; 0,
+</span><span>    &#39;Belgium&#39; =&gt; 1,
+</span><span>    &#39;Austria&#39; =&gt; 2,
+</span><span>    &#39;Denmark&#39; =&gt; 3,
+</span><span>    &#39;Belgium&#39; =&gt; 4,
+</span><span>];
+</span><span>print_r($map);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [Croatia] =&gt; 0
+</span><span>    [Belgium] =&gt; 4 // &#39;Belgium =&gt; 1&#39; was overriden
+</span><span>    [Austria] =&gt; 2
+</span><span>    [Denmark] =&gt; 3
+</span><span>)
+</span></code></pre>
+<div class="separator"></div>
+<p>It was important to do a quick overview of maps and lists, they are different kinds of collections, and because of that, each one has its own specific sorting methods.</p>
+<p>The idea of those <code>a</code>, <code>r</code>, <code>k</code> &amp; <code>u</code> + <code>sort()</code> is to work as modifiers as follows:</p>
+<div style="font-size: 1.3rem">
+R = reverse ➝ sort in descencing order, lists & maps<br>
+K = key ➝ sort by key, only for maps<br>
+A = associative ➝ sort by value, only for maps<br>
+U = user-defined ➝ defined by the user in a callback
+</div>
+<h2 id="sorting-lists">Sorting Lists 🧵</h2>
+<h3 id="sort-rsort">sort() &amp; rsort()</h3>
+<p>These methods sort lists in <em>ascending/descending</em> order.</p>
+<pre style="background-color:#eff1f5;color:#4f5b66;"><code><span># <b>sort</b>: Sort list by <b>ascending</b> order.
+</span><span>$sort = ['Croatia', 'Belgium', 'Austria', 'Belgium'];
+</span><span>sort($sort);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [0] =&gt; <b>A</b>ustria
+</span><span>    [1] =&gt; <b>B</b>elgium
+</span><span>    [2] =&gt; <b>B</b>elgium
+</span><span>    [3] =&gt; <b>C</b>roatia
+</span><span>)
+</span><span>
+</span><span>---
+</span><span>
+</span><span># <b>rsort</b>: Sort list by <b>descending</b> order.
+</span><span>$rsort = ['Croatia', 'Belgium', 'Austria', 'Belgium'];
+</span><span>rsort($rsort);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [0] =&gt; <b>C</b>roatia
+</span><span>    [1] =&gt; <b>B</b>elgium
+</span><span>    [2] =&gt; <b>B</b>elgium
+</span><span>    [3] =&gt; <b>A</b>ustria
+</span><span>)
+</span></code></pre>
+<h2 id="sorting-maps">Sorting Maps 🗺️</h2>
+<h3 id="asort-arsort-ksort-krsort">asort(), arsort(), ksort() &amp; krsort()</h3>
+<p>These methods sort associative arrays by <em>key/value</em> in <em>ascending/descending</em> order.</p>
+<pre style="background-color:#eff1f5;color:#4f5b66;"><code><span># <b>ksort</b>: Sort map by <b>key</b> in <b>ascending</b> order.
+</span><span>$ksort = [100 =&gt; 'Croatia', 200 =&gt; 'Austria', 300 =&gt; 'Belgium'];
+</span><span>ksort($ksort);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [<b>100</b>] =&gt; Croatia
+</span><span>    [<b>200</b>] =&gt; Austria
+</span><span>    [<b>300</b>] =&gt; Belgium
+</span><span>)
+</span><span>
+</span><span>---
+</span><span>
+</span><span># <b>krsort</b>: Sort map by <b>key</b> in <b>descending</b> order.
+</span><span>$krsort = [100 =&gt; 'Croatia', 200 =&gt; 'Austria', 300 =&gt; 'Belgium'];
+</span><span>krsort($krsort);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [<b>300</b>] =&gt; Belgium
+</span><span>    [<b>200</b>] =&gt; Austria
+</span><span>    [<b>100</b>] =&gt; Croatia
+</span><span>)
+</span><span>
+</span><span>---
+</span><span>
+</span><span># <b>asort</b>: Sort map by <b>value</b> in <b>ascending</b> order.
+</span><span>$asort = [100 =&gt; 'Croatia', 200 =&gt; 'Austria', 300 =&gt; 'Belgium'];
+</span><span>asort($asort);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [200] =&gt; <b>A</b>ustria
+</span><span>    [300] =&gt; <b>B</b>elgium
+</span><span>    [100] =&gt; <b>C</b>roatia
+</span><span>)
+</span><span>
+</span><span>---
+</span><span>
+</span><span># <b>arsort</b>: Sort map by <b>value</b> in <b>descending</b> order.
+</span><span>$arsort = [100 =&gt; 'Croatia', 200 =&gt; 'Austria', 300 =&gt; 'Belgium'];
+</span><span>arsort($arsort);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [100] =&gt; <b>C</b>roatia
+</span><span>    [300] =&gt; <b>B</b>elgium
+</span><span>    [200] =&gt; <b>A</b>ustria
+</span><span>)
+</span></code></pre>
+<h2 id="user-defined-functions-ok-womcomputer">User-defined functions 👩‍💻</h2>
+<p>Until now everything was nice, but as you know, usually we have a collection of complex objects, and sometimes we want
+to define our own sorting function, in these scenarios, the <em>asort()</em> method simply doesn't work. Eg:</p>
+<p>“Sorting a collection of <code>Product</code> by price in ascending order, and when more than one product has the same price, sort
+them <em>alphabetically</em> by the name”.</p>
+<p>We need to find a more sophisticated approach. And this is only possible if we can define our own sorting method, in
+this case, we can take advantage of using the <code>spaceship operator</code>! 🚀</p>
+<p>Basically, this operator is syntactic sugar specialized for comparisons.</p>
+<p>The first parameter is the array we want to sort and the second is a callback that returns an integer value.</p>
+<pre style="background-color:#eff1f5;color:#4f5b66;"><code><span>/** @var <b>callable(mixed,mixed):int</b> $callable */
+</span><span>$callable = function (mixed $a, mixed $b): int { ... }
+</span><span>
+</span><span>usort(&amp;$array, $callable): bool
+</span></code></pre>
+<p>The values this callable must return are <code>-1</code>, <code>0</code> and <code>1</code> if the current item is less, equal or greater than the
+previous one, to be sorted before or after in the collection.</p>
+<pre style="background-color:#eff1f5;color:#4f5b66;"><code><span>function compare(int $a, int $b): int
+</span><span>{
+</span><span>    if ($a == $b) {
+</span><span>        return 0;
+</span><span>    }
+</span><span>    return ($a &lt; $b) ? -1 : 1;
+</span><span>}
+</span><span>
+</span><span># Is the same than...
+</span><span>
+</span><span>function compare(int $a, int $b): int
+</span><span>{
+</span><span>    return $a &lt;=&gt; $b;
+</span><span>}
+</span><span>
+</span><span># Is the same than...
+</span><span>
+</span><span>fn (int $a, int $b): int =&gt; $a &lt;=&gt; $b;
+</span></code></pre>
+<h3 id="usort-uksort-uasort">usort(), uksort() &amp; uasort()</h3>
+<p>These methods sort by keys or values (preserving or resetting the keys) in a user-defined callback. Let’s see some
+examples:</p>
+<pre style="background-color:#eff1f5;color:#4f5b66;"><code><span># <b>usort</b>: Sort list/map by callback from the <b>values</b>, <i>keys are reset</i>.
+</span><span>$usort = [100 =&gt; 'Croatia', 300 =&gt; 'Austria', 200 =&gt; 'Belgium'];
+</span><span>usort($usort, fn (string $a, string $b): int =&gt; $a &lt;=&gt; $b);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [<b>0</b>] =&gt; <b>A</b>ustria
+</span><span>    [<b>1</b>] =&gt; <b>B</b>elgium
+</span><span>    [<b>2</b>] =&gt; <b>C</b>roatia
+</span><span>)
+</span><span>
+</span><span>---
+</span><span>
+</span><span># <b>uksort</b>: Sort map by callback from the <b>keys</b>.
+</span><span>$uksort = [100 =&gt; 'Croatia', 300 =&gt; 'Austria', 200 =&gt; 'Belgium'];
+</span><span>uksort($uksort, fn (int $a, int $b): int =&gt; $a &lt;=&gt; $b);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [<b>100</b>] =&gt; Croatia
+</span><span>    [<b>200</b>] =&gt; Belgium
+</span><span>    [<b>300</b>] =&gt; Austria
+</span><span>)
+</span><span>
+</span><span>---
+</span><span>
+</span><span># <b>uasort</b>: Sort map by callback from the <b>values</b> <i>preserving the keys</i>.
+</span><span>$uasort = [100 =&gt; 'Croatia', 300 =&gt; 'Austria', 200 =&gt; 'Belgium'];
+</span><span>uasort($uasort, fn (string $a, string $b): int =&gt; $a &lt;=&gt; $b);
+</span><span>
+</span><span>Array
+</span><span>(
+</span><span>    [300] =&gt; <b>A</b>ustria
+</span><span>    [200] =&gt; <b>B</b>elgium
+</span><span>    [100] =&gt; <b>C</b>roatia
+</span><span>)
+</span></code></pre>
+<p>For the sake of simplicity, I used the function: <code>fn ($a, $b) =&gt; $a &lt;=&gt; $b;</code> if the collection was holding complex
+objects, it would be the same but comparing some property, it depends on your needs.</p>
+<h2 id="bookmark-tabs-cheat-sheet">📑 Cheat Sheet</h2>
+<pre data-lang="bash" style="background-color:#eff1f5;color:#4f5b66;" class="language-bash "><code class="language-bash" data-lang="bash"><b>sort()</b> - sort list in ascending order
+<span><b>rsort()</b> - sort list in descending order
+</span><span>
+</span><span><b>asort()</b> - sort map by value in ascending order 
+</span><span><b>ksort()</b> - sort map by key in ascending order
+</span><span><b>arsort()</b> - sort map by value in descending order
+</span><span><b>krsort()</b> - sort map by key in descending order
+</span><span>
+</span><span><b>usort()</b> - sort list or map by value in a user-defined callback, reset keys
+</span><span><b>uksort()</b> - sort map by keys in a user-defined callback
+</span><span><b>uasort()</b> - sort map by value in a user-defined callback
+</span></code></pre>
+<blockquote>
+<p>* Take into account that the array is passed by reference to the sorting function, which means you must initialize
+the array in a different line, and the sorting function will mutate the original array 👀</p>
+</blockquote>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>Array Sorting | <a href="https://www.php.net/manual/en/array.sorting.php">PHP Doc</a></li>
+<li>PHP Sorting Arrays | <a href="https://www.w3schools.com/php/php_arrays_sort.asp">W3Schools</a></li>
+<li>Difference between Set, List and Map in
+Java | <a href="https://www.java67.com/2013/01/difference-between-set-list-and-map-in-java.html">Java67</a></li>
+</ul>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

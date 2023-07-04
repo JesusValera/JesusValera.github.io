@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>Functional Programming in JavaScript | JesusValera</title>
+
+
+
+<meta property="og:title" content="Functional Programming in JavaScript">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="Functional Programming is a paradigm where programs are constructed by applying and composing functions. Let&#x27;s take a look at some functions we have on JS">
+<meta property="og:description" content="Functional Programming is a paradigm where programs are constructed by applying and composing functions. Let&#x27;s take a look at some functions we have on JS">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/functional-programming-in-javascript/">
+<meta property="og:url" content="https://jesusvalerareales.com/functional-programming-in-javascript/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2021-05-17T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "Functional Programming is a paradigm where programs are constructed by applying and composing functions. Let&#x27;s take a look at some functions we have on JS",
+  "url": "https://jesusvalerareales.com/functional-programming-in-javascript/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Functional Programming in JavaScript"
+  
+    
+    
+      "datePublished":"2021-05-17T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/functional-programming-in-javascript/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">Functional Programming in JavaScript</h1>
+    <h2 class="post-subtitle">forEach, map, filter, reduce, find, findIndex, some &amp; every</h2>
+    <small>
+      <time datetime="2021-05-17" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        May 17, 2021 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        14 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <p><img src="/images/2021-05-17/1.png" alt="rabbit" /></p>
+<span id="continue-reading"></span>
+<p>Functional Programming is a paradigm where programs are constructed by applying and composing functions. The Functional
+Programming keys are:</p>
+<ul>
+<li>You treat functions as first-class citizens.</li>
+<li>You can pass them as arguments to other functions.</li>
+<li>A function can return another function.</li>
+<li>You can modify functions.</li>
+</ul>
+<p>When a function is called with some given arguments, it will always return the same result, and cannot be affected by
+any mutable state or other side effects.</p>
+<p>And now, we are going to take a look at the most common JavaScript functions that allow us to write Functional
+Programming: <em>forEach</em>, <em>map</em>, <em>filter</em>, <em>reduce</em>, <em>find</em>, <em>findIndex</em>, <em>some</em> and <em>every</em>.</p>
+<div class="separator"></div>
+<h2 id="for-each">For Each 🧩</h2>
+<p>We use <em>forEach()</em> when we like to iterate through an array of items.<br>
+Using this method, you can get the item of the current element when iterating and/or the index.<br>
+It is recommendable not to use it unless you are sure you want to modify the original array. This method is mutable. It
+means it will modify the original array.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>countries</b> </span><span>= ['</span><span style="color:#a3be8c;">Spain</span><span>', '</span><span style="color:#a3be8c;">Germany</span><span>', '</span><span style="color:#a3be8c;">Portugal</span><span>', '</span><span style="color:#a3be8c;">France</span><span>']
+</span><span style="color:#bf616a;"><b><b>countries</b></b></span><span>.</span><span style="color:#96b5b4;">forEach</span><span>(
+</span><span>    (</span><span style="color:#bf616a;">country</span><span>, </span><span style="color:#bf616a;">index</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;">index</span><span>, </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#96b5b4;">toUpperCase</span><span>())
+</span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span style="color:#d08770;">0 </span><span>"</span><span style="color:#a3be8c;">SPAIN</span><span>"
+</span><span style="color:#d08770;">1 </span><span>"</span><span style="color:#a3be8c;">GERMANY</span><span>"
+</span><span style="color:#d08770;">2 </span><span>"</span><span style="color:#a3be8c;">PORTUGAL</span><span>"
+</span><span style="color:#d08770;">3 </span><span>"</span><span style="color:#a3be8c;">FRANCE</span><span>"
+</span></code></pre>
+<h2 id="map">Map 🗺</h2>
+<p>We use <em>map()</em> whenever we want to map the values into other values producing a new array.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>countries</b> </span><span>= ['</span><span style="color:#a3be8c;">Spain</span><span>', '</span><span style="color:#a3be8c;">Germany</span><span>', '</span><span style="color:#a3be8c;">Portugal</span><span>', '</span><span style="color:#a3be8c;">France</span><span>']
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>mapped</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#8fa1b3;">map</span><span>((</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#96b5b4;">toUpperCase</span><span>())
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>mapped</b></span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span>["</span><span style="color:#a3be8c;">SPAIN</span><span>", "</span><span style="color:#a3be8c;">GERMANY</span><span>", "</span><span style="color:#a3be8c;">PORTUGAL</span><span>", "</span><span style="color:#a3be8c;">FRANCE</span><span>"]
+</span></code></pre>
+<h2 id="filter-hourglass">Filter ⌛️</h2>
+<p>We use <em>filter()</em> when we want to pick just some specific elements regarding a filter. It returns a new array with the
+filtered elements or empty if no matches.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>countries</b> </span><span>= ['</span><span style="color:#a3be8c;">Spain</span><span>', '</span><span style="color:#a3be8c;">Germany</span><span>', '</span><span style="color:#a3be8c;">Portugal</span><span>', '</span><span style="color:#a3be8c;">France</span><span>']
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>filtered</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#8fa1b3;">filter</span><span>(
+</span><span>    (</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#8fa1b3;">includes</span><span>('</span><span style="color:#a3be8c;">an</span><span>')
+</span><span>)
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>filtered</b></span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span>["</span><span style="color:#a3be8c;">Germany</span><span>", "</span><span style="color:#a3be8c;">France</span><span>"]
+</span></code></pre>
+<h2 id="reduce-pick">Reduce ⛏</h2>
+<p>We use <em>reduce()</em> when we want to return a single value depending on a specific closure. This function can take an
+initial value, which by default is empty (0 or &quot;&quot;) as the second parameter.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>numbers</b> </span><span>= [</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">7</span><span>, </span><span style="color:#d08770;">8</span><span>, </span><span style="color:#d08770;">9</span><span>, </span><span style="color:#d08770;">10</span><span>]
+</span><span style="color:#b48ead;">let </span><span style="color:#bf616a;"><b>initialValue</b> </span><span>= </span><span style="color:#d08770;">5
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>sum</b> </span><span>= </span><span style="color:#bf616a;"><b>numbers</b></span><span>.</span><span style="color:#8fa1b3;">reduce</span><span>(
+</span><span>    (</span><span style="color:#bf616a;">accumulator</span><span>, </span><span style="color:#bf616a;">value</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">accumulator </span><span>+ </span><span style="color:#bf616a;">value</span><span>,
+</span><span>    </span><span style="color:#bf616a;"><b>initialValue</b>
+</span><span>)
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>sum</b></span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span style="color:#d08770;">60
+</span></code></pre>
+<h2 id="find-mag-right">find 🔎</h2>
+<p>We use <em>find()</em> if we are interested in the first occurrence of a certain element in an array. It will return
+<em>undefined</em> otherwise.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>countries</b> </span><span>= ['</span><span style="color:#a3be8c;">Spain</span><span>', '</span><span style="color:#a3be8c;">Germany</span><span>', '</span><span style="color:#a3be8c;">Portugal</span><span>', '</span><span style="color:#a3be8c;">France</span><span>']
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>find</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#96b5b4;"><b>find</b></span><span>((</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#8fa1b3;">includes</span><span>('</span><span style="color:#a3be8c;">an</span><span>'))
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>find</b></span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span>"</span><span style="color:#a3be8c;">Germany</span><span>"
+</span></code></pre>
+<h2 id="find-index-turk">find Index 🔑</h2>
+<p>We use <em>findIndex()</em> if we would like the first occurrence of a certain element in an array, this method is pretty
+similar to <em>find</em> but it will return not the value but the index. In case there are no matches, the output would be -1.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>countries</b> </span><span>= ['</span><span style="color:#a3be8c;">Spain</span><span>', '</span><span style="color:#a3be8c;">Germany</span><span>', '</span><span style="color:#a3be8c;">Portugal</span><span>', '</span><span style="color:#a3be8c;">France</span><span>']
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b><b>find</b>Index</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#8fa1b3;"><b><b>find</b>Index</b></span><span>(
+</span><span>    (</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#8fa1b3;">includes</span><span>('</span><span style="color:#a3be8c;">an</span><span>')
+</span><span>)
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b><b>find</b>Index</b></span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span style="color:#d08770;">1
+</span></code></pre>
+<h2 id="some">Some 🧵</h2>
+<p>We use <em>some()</em> if we are interested to know if some element from an array meets a specific closure. If any of the items
+satisfy the criteria the result will be <em>true</em>, else, it will be <em>false</em>.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>countries</b> </span><span>= ['</span><span style="color:#a3be8c;">Spain</span><span>', '</span><span style="color:#a3be8c;">Germany</span><span>', '</span><span style="color:#a3be8c;">Portugal</span><span>', '</span><span style="color:#a3be8c;">France</span><span>']
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>isAn</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#8fa1b3;">some</span><span>((</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#8fa1b3;">includes</span><span>('</span><span style="color:#a3be8c;">an</span><span>'))
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>isLand</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#8fa1b3;">some</span><span>((</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#8fa1b3;">includes</span><span>('</span><span style="color:#a3be8c;">land</span><span>'))
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>isAn</b></span><span>)
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>isLand</b></span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span style="color:#d08770;">true
+</span><span style="color:#d08770;">false
+</span></code></pre>
+<h2 id="every-shamrock">Every ☘️</h2>
+<p>We use <em>every()</em> if we want to know if every element from an array meets a specific closure. This method is somehow
+similar to some but the opposite. This method also returns <em>true</em> or <em>false</em>.</p>
+<pre data-lang="javascript" style="background-color:#eff1f5;color:#4f5b66;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>countries</b> </span><span>= ['</span><span style="color:#a3be8c;">Spain</span><span>', '</span><span style="color:#a3be8c;">Germany</span><span>', '</span><span style="color:#a3be8c;">Portugal</span><span>', '</span><span style="color:#a3be8c;">France</span><span>']
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>isEveryA</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#8fa1b3;">every</span><span>((</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#8fa1b3;">includes</span><span>('</span><span style="color:#a3be8c;">a</span><span>'))
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;"><b>isEveryE</b> </span><span>= </span><span style="color:#bf616a;"><b>countries</b></span><span>.</span><span style="color:#8fa1b3;">every</span><span>((</span><span style="color:#bf616a;">country</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">country</span><span>.</span><span style="color:#8fa1b3;">includes</span><span>('</span><span style="color:#a3be8c;">e</span><span>'))
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>isEveryA</b></span><span>)
+</span><span style="color:#d08770;"><b>console</b></span><span>.</span><span style="color:#96b5b4;">log</span><span>(</span><span style="color:#bf616a;"><b>isEveryE</b></span><span>)
+</span><span>
+</span><span>--</span><span style="color:#bf616a;">OUTPUT</span><span>--
+</span><span style="color:#d08770;">true
+</span><span style="color:#d08770;">false
+</span></code></pre>
+<div class="separator"></div>
+<p><img src="/images/2021-05-17/2.png" alt="burrow" /></p>
+<p>These are the most common functions when dealing with Functional Programming, but there are many more (<em>fill</em>, <em>join</em>,
+<em>sort</em>, etc). You can easily check the full list on the
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#instance_methods">Mozilla Developer</a>
+🦊 site.</p>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

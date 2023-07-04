@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>Testing with Test Doubles? | JesusValera</title>
+
+
+
+<meta property="og:title" content="Testing with Test Doubles?">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="Example of the types of Test Doubles: dummy, stub, spy, mock and fake">
+<meta property="og:description" content="Example of the types of Test Doubles: dummy, stub, spy, mock and fake">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/testing-with-test-doubles/">
+<meta property="og:url" content="https://jesusvalerareales.com/testing-with-test-doubles/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2020-06-11T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "Example of the types of Test Doubles: dummy, stub, spy, mock and fake",
+  "url": "https://jesusvalerareales.com/testing-with-test-doubles/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Testing with Test Doubles?"
+  
+    
+    
+      "datePublished":"2020-06-11T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/testing-with-test-doubles/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">Testing with Test Doubles?</h1>
+    <h2 class="post-subtitle">Dummy, Stub, Spy, Mock or Fake</h2>
+    <small>
+      <time datetime="2020-06-11" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        June 11, 2020 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        7 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <img alt="parliament-budapest" src="/images/2020-06-11/1.png" style="width: 100%"/>
+<span id="continue-reading"></span><h2 id="test-doubles">Test Doubles</h2>
+<p>A Test Double is an object that can stand-in for a real object in a test, similar to how a stunt double stands in for an
+actor in a movie.</p>
+<p>As I wrote in <a href="/the-importance-of-tests-in-our-software">“The importance of the Tests in our Software”</a>, there are
+several types of tests. They are also known as Test Doubles instead of “Mocks”.</p>
+<h3 id="the-five-types-of-test-doubles-are">The five types of Test Doubles are:</h3>
+<img alt="test-types" src="/images/2020-06-11/2.png" style="width: 90%"/>
+<ul>
+<li><strong>Dummy</strong>: It is used as a placeholder when an argument needs to be filled in.</li>
+<li><strong>Stub</strong>: It provides fake data to the SUT (System Under Test).</li>
+<li><strong>Spy</strong>: It records information about how the class is being used.</li>
+<li><strong>Mock</strong>: It defines an expectation of how it will be used. It will cause failure if the expectation isn’t met.</li>
+<li><strong>Fake</strong>: It is an actual implementation of the contract but is unsuitable for production.</li>
+</ul>
+<p><img src="/images/2020-06-11/3.png" alt="bodo-istvan" /></p>
+<blockquote>
+<p>The snippets are a pseudo-language based on a mix of PHP &amp; Java.<br>
+The idea is to make it understandable to everyone familiar with OOP.</p>
+</blockquote>
+<h2 id="dummy">Dummy</h2>
+<p>The dummies are objects that our SUT depends on, but they are never used. We don’t care about them because they are
+irrelevant to the test scope.</p>
+<p>Let’s imagine we have a service with a dependency that is irrelevant in the current test. We can perform something
+similar to the following snippet:</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">Service
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public final </span><span style="color:#d08770;">String </span><span style="color:#343d46;">OUTPUT </span><span>= &#39;</span><span style="color:#a3be8c;">something</span><span>&#39;</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">format</span><span style="color:#343d46;">(</span><span style="background-color:#bf616a;color:#eff1f5;">?</span><span style="color:#d08770;">Dependency </span><span style="color:#343d46;">dependency): </span><span style="color:#d08770;">String
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">// &#39;dependency&#39; won&#39;t interfere in the expected result.
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return</span><span style="color:#343d46;"> self::</span><span style="color:#bf616a;">OUTPUT</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">ServiceTest </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">TestCase
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">testFormat</span><span style="color:#343d46;">(): </span><span style="color:#b48ead;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">// Notice as the parameter is irrelevant.
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">String</span><span style="color:#343d46;"> result </span><span>= </span><span style="color:#343d46;">(</span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Service</span><span style="color:#343d46;">()).</span><span style="color:#bf616a;">format</span><span style="color:#343d46;">(</span><span style="color:#d08770;">null</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">        self.</span><span style="color:#bf616a;">assertSame</span><span style="color:#343d46;">(</span><span style="color:#d08770;">Service</span><span style="color:#343d46;">::</span><span style="color:#bf616a;">OUTPUT</span><span style="color:#343d46;">, result);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<h2 id="stub">Stub</h2>
+<p>A stub is an object which returns fake data.</p>
+<p>Let’s imagine our service depends on a user model, then the service does something, and finally, it returns the user’s
+UUID.
+We can create a stub object with fake values to assert the service works as expected.</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">Service
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">doSomething</span><span style="color:#343d46;">(</span><span style="color:#d08770;">UserModelInterface </span><span style="color:#bf616a;">user</span><span style="color:#343d46;">): </span><span style="color:#d08770;">Int
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">/* Do things */
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return</span><span style="color:#343d46;"> user.uuid;
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>To test this service, we can create a stub of the user and check if the response is what we were expecting.</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">ServiceTest </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">TestCase
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">testDoSomething</span><span style="color:#343d46;">(): </span><span style="color:#b48ead;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">// The service needs a implementation from `UserModelInterface`.
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">String</span><span style="color:#343d46;"> uuid </span><span>= </span><span style="color:#343d46;">(</span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Service</span><span style="color:#343d46;">()).</span><span style="color:#bf616a;">doSomething</span><span style="color:#343d46;">(</span><span style="color:#b48ead;">new </span><span style="color:#d08770;">UserStub</span><span style="color:#343d46;">());
+</span><span style="color:#343d46;">        self.</span><span style="color:#bf616a;">assertStringContainsString</span><span style="color:#343d46;">(</span><span>&#39;</span><span style="color:#a3be8c;">0000-000-000-00001</span><span>&#39;</span><span style="color:#343d46;">, uuid);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span style="color:#b48ead;">interface </span><span style="color:#d08770;">UserModelInterface
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">getUuid</span><span style="color:#343d46;">(): </span><span style="color:#d08770;">String</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">UserStub </span><span style="color:#b48ead;">implements </span><span style="color:#a3be8c;">UserModelInterface
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">getUuid</span><span style="color:#343d46;">(): </span><span style="color:#d08770;">String
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return </span><span>&#39;</span><span style="color:#a3be8c;">0000-000-000-00001</span><span>&#39;</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<h2 id="spy">Spy</h2>
+<p>A test spy is an object capable of capturing indirect output and providing indirect input as needed. The indirect output
+is something we cannot directly observe.</p>
+<p><em>We can achieve that by extending the original class and saving the function params as class arguments.</em></p>
+<p>In the following snippet, we can know exactly how many times the log() method has been called, as well as the content of
+the messages.
+The point of this spy is to have much more knowledge of the internal object state in exchange for deeper coupling, which
+could be problematic in the future because it makes our tests more fragile.</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">interface </span><span style="color:#d08770;">LoggerInterface
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">log</span><span style="color:#343d46;">(</span><span style="color:#d08770;">String </span><span style="color:#bf616a;">message</span><span style="color:#343d46;">): </span><span style="color:#b48ead;">void</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">LoggerSpy </span><span style="color:#b48ead;">implements </span><span style="color:#a3be8c;">LoggerInterface
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public </span><span style="color:#d08770;">Array</span><span style="color:#343d46;">&lt;</span><span style="color:#d08770;">String</span><span style="color:#343d46;">&gt; messages </span><span>=</span><span style="color:#343d46;"> [];
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">log</span><span style="color:#343d46;">(</span><span style="color:#d08770;">String </span><span style="color:#bf616a;">message</span><span style="color:#343d46;">): </span><span style="color:#b48ead;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#bf616a;">this</span><span style="color:#343d46;">.messages.</span><span style="color:#bf616a;">add</span><span style="color:#343d46;">(message);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">UserNotifier
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">__construct</span><span style="color:#343d46;">(
+</span><span style="color:#343d46;">        </span><span style="color:#bf616a;">private </span><span style="color:#d08770;">LoggerInterface </span><span style="color:#bf616a;">logger</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">    ) {}
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">registerUser</span><span style="color:#343d46;">(</span><span style="color:#d08770;">UserModelInterface </span><span style="color:#bf616a;">user</span><span style="color:#343d46;">): </span><span style="color:#b48ead;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#bf616a;">this</span><span style="color:#343d46;">.logger.</span><span style="color:#bf616a;">log</span><span style="color:#343d46;">(</span><span>&quot;</span><span style="color:#a3be8c;">Notifying the user: {user.name()}</span><span>&quot;</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">// ...
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>The following would be the implementation of the spy in a test:</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">UserNotifierTest </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">TestCase
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">testLogMessage</span><span style="color:#343d46;">(): </span><span style="color:#b48ead;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">LoggerSpy</span><span style="color:#343d46;"> logger </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">LoggerSpy</span><span style="color:#343d46;">();
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">UserNotifier</span><span style="color:#343d46;"> notifier </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">UserNotifier</span><span style="color:#343d46;">(logger);
+</span><span style="color:#343d46;">    
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">User</span><span style="color:#343d46;"> user </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">User</span><span style="color:#343d46;">(name</span><span>: &#39;</span><span style="color:#a3be8c;">Jesus</span><span>&#39;</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">        notifier.</span><span style="color:#bf616a;">registerUser</span><span style="color:#343d46;">(user);
+</span><span style="color:#343d46;">    
+</span><span style="color:#343d46;">        self.</span><span style="color:#bf616a;">assertStringContainsString</span><span style="color:#343d46;">(
+</span><span style="color:#343d46;">            </span><span>&quot;</span><span style="color:#a3be8c;">Notifying the user: Jesus</span><span>&quot;</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">            logger.messages.</span><span style="color:#bf616a;">firt</span><span style="color:#343d46;">()
+</span><span style="color:#343d46;">        );
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<h2 id="mock">Mock</h2>
+<p>A mock is an object that is <strong>capable of controlling both indirect input and output</strong>, and it has a mechanism for
+automatic <strong>assertion of expectations and results</strong>.</p>
+<p>Imagine the ShoppingCart class calls the database and performs big and complex functions. For this reason, we cannot
+unit test this class correctly due to the coupling.</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">ShoppingService
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">calculateAmount</span><span style="color:#343d46;">(</span><span style="color:#d08770;">Lines </span><span style="color:#bf616a;">lines</span><span style="color:#343d46;">): </span><span style="color:#d08770;">Float
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">Float</span><span style="color:#343d46;"> amount </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">/** Complex code to test, we need a mock for this class */
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">Array</span><span style="color:#343d46;">&lt;</span><span style="color:#d08770;">Line</span><span style="color:#343d46;">&gt; linesTransformed </span><span>= </span><span style="color:#d08770;">ShoppingCart</span><span style="color:#343d46;">::</span><span style="color:#bf616a;">transform</span><span style="color:#343d46;">(lines);
+</span><span style="color:#343d46;">        </span><span style="color:#bf616a;">foreach </span><span style="color:#343d46;">(</span><span style="color:#d08770;">Line</span><span style="color:#343d46;"> line </span><span>:</span><span style="color:#343d46;"> linesTransformed) {
+</span><span style="color:#343d46;">            amount </span><span>+=</span><span style="color:#343d46;"> line.</span><span style="color:#bf616a;">price</span><span style="color:#343d46;">();
+</span><span style="color:#343d46;">        }
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return</span><span style="color:#343d46;"> amount;
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>In this kind of situations, mocking is the best option if we cannot modify this class easily (maybe the class is used in
+different parts), and it could take too long to refactorize.</p>
+<p>My favourite solution for this is “<a href="https://refactoring.guru/extract-method">extract method refactoring</a>”:</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">class </span><span style="color:#d08770;">ShoppingService </span><span style="color:#a7adba;">// Not final anymore because of the mock!!
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">calculateAmount</span><span style="color:#343d46;">(</span><span style="color:#d08770;">Lines </span><span style="color:#bf616a;">lines</span><span style="color:#343d46;">): </span><span style="color:#d08770;">Float
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">Float</span><span style="color:#343d46;"> amount </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">/** Complex code to test, we need a mock for this class */
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">Array</span><span style="color:#343d46;">&lt;</span><span style="color:#d08770;">Line</span><span style="color:#343d46;">&gt; linesTransformed </span><span>= </span><span style="color:#bf616a;">this</span><span style="color:#343d46;">.</span><span style="color:#bf616a;">getShoppingCart</span><span style="color:#343d46;">(lines);
+</span><span style="color:#343d46;">        </span><span style="color:#bf616a;">foreach </span><span style="color:#343d46;">(</span><span style="color:#d08770;">Line</span><span style="color:#343d46;"> line </span><span>:</span><span style="color:#343d46;"> linesTransformed) {
+</span><span style="color:#343d46;">            amount </span><span>+=</span><span style="color:#343d46;"> line.</span><span style="color:#bf616a;">price</span><span style="color:#343d46;">();
+</span><span style="color:#343d46;">        }
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return</span><span style="color:#343d46;"> amount;
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#a7adba;">/**
+</span><span style="color:#a7adba;">     * Protected to have access in the mock object.
+</span><span style="color:#a7adba;">     *
+</span><span style="color:#a7adba;">     * @codeCoverageIgnore
+</span><span style="color:#a7adba;">     */
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">protected</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">getShoppingCart</span><span style="color:#343d46;">(</span><span style="color:#d08770;">Lines </span><span style="color:#bf616a;">lines</span><span style="color:#343d46;">): </span><span style="color:#d08770;">Array
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">ShoppingCart</span><span style="color:#343d46;">::</span><span style="color:#bf616a;">transform</span><span style="color:#343d46;">(lines);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>And this is the mock:</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">LoggerTest </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">TestCase
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">testMovieBudgetFactory</span><span style="color:#343d46;">(): </span><span style="color:#b48ead;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">MockShoppingService</span><span style="color:#343d46;"> service </span><span>= </span><span style="color:#bf616a;">this</span><span style="color:#343d46;">.</span><span style="color:#bf616a;">createMock</span><span style="color:#343d46;">(</span><span style="color:#d08770;">ShoppingService</span><span style="color:#343d46;">::</span><span style="color:#bf616a;">class</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">        service
+</span><span style="color:#343d46;">            .</span><span style="color:#bf616a;">method</span><span style="color:#343d46;">(</span><span>&#39;</span><span style="color:#a3be8c;">getShoppingCart</span><span>&#39;</span><span style="color:#343d46;">) </span><span style="color:#a7adba;">// Overriding the method.
+</span><span style="color:#343d46;">            .</span><span style="color:#bf616a;">willReturn</span><span style="color:#343d46;">([</span><span style="color:#d08770;">100</span><span style="color:#343d46;">, </span><span style="color:#d08770;">200</span><span style="color:#343d46;">, </span><span style="color:#d08770;">300</span><span style="color:#343d46;">]);
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">Lines</span><span style="color:#343d46;"> stubLines </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Lines</span><span style="color:#343d46;">(</span><span style="color:#d08770;">null</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">Float</span><span style="color:#343d46;"> totalAmount </span><span>=</span><span style="color:#343d46;"> service.</span><span style="color:#bf616a;">calculateAmount</span><span style="color:#343d46;">(stubLines);
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        self.</span><span style="color:#bf616a;">assertEquals</span><span style="color:#343d46;">(</span><span style="color:#d08770;">600</span><span style="color:#343d46;">, totalAmount);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<blockquote>
+<p>This methodology is very handy when we want to refactor a class step-by-step, but we could go further and extract that
+logic in a new class, then when the class <code>ShoppingService</code> is created, just injecting the dependency via constructor
+would help us to separate the logic.</p>
+</blockquote>
+<h2 id="fake">Fake</h2>
+<p>A fake is a simpler implementation of real objects.</p>
+<p>Fakes are used when we want to test an infrastructural class, in other words, fakes are for the classes which are beyond
+our application limit (repositories or queues, for example).</p>
+<p>As you can observe in the first picture (the diagram), a fake is not in the hierarchical line within the dummy, stub,
+spy or mock. This is because a fake can behave like a dummy, stub, spy or mock for our concrete use case.</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">interface </span><span style="color:#d08770;">UserRepositoryInterface
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">getUserById</span><span style="color:#343d46;">(</span><span style="color:#d08770;">String </span><span style="color:#bf616a;">uuid</span><span style="color:#343d46;">): </span><span style="color:#d08770;">User</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">}
+</span><span>    
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">FakeUserRepository </span><span style="color:#b48ead;">implements </span><span style="color:#a3be8c;">UserRepositoryInterface
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public</span><span style="color:#343d46;"> function </span><span style="color:#8fa1b3;">getUserById</span><span style="color:#343d46;">(</span><span style="color:#d08770;">String </span><span style="color:#bf616a;">uuid</span><span style="color:#343d46;">): </span><span style="color:#d08770;">UserModel
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return new </span><span style="color:#d08770;">User</span><span style="color:#343d46;">(uuid, </span><span>&#39;</span><span style="color:#a3be8c;">Jesus</span><span>&#39;</span><span style="color:#343d46;">, </span><span>&quot;</span><span style="color:#a3be8c;">[&#39;ADMIN_ROLE&#39;]</span><span>&quot;</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>So, when we use this fake repository, we will receive a stub User.</p>
+<h3 id="final-thoughts">Final thoughts</h3>
+<p>We must know the scope of the code we are going to test to get coupled as less as possible.
+That means if we have to pick a test double, first, we must know if the test is within our boundaries or not, if not, a
+fake is the best option, otherwise, my recommendation is to pick the corresponding test with the least knowledge as
+possible: dummy, stub, spy or mock (in that order).</p>
+<div class="separator"></div>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/Chemaclass/php-best-practices/blob/master/technical-skills/testing.md">Best practices — Testing | Chemaclass Github</a></li>
+<li><a href="https://matthiasnoback.nl/2014/07/test-doubles/">A better PHP testing experience | Matthias Noback</a></li>
+<li><a href="https://code.tutsplus.com/tutorials/all-about-mocking-with-phpunit--net-27252">All about Mocking with PHPUnit | TutsPlus</a></li>
+<li><a href="https://blog.cleancoder.com/uncle-bob/2014/05/14/TheLittleMocker.html">The Little Mocker | Clean Coder</a></li>
+<li><a href="https://testing.googleblog.com/2013/07/testing-on-toilet-know-your-test-doubles.html">Testing on the Toilet | Google Testing Blog</a></li>
+<li><a href="https://martinfowler.com/bliki/TestDouble.html">TestDouble | Martin Fowler</a></li>
+<li><a href="https://martinfowler.com/bliki/GivenWhenThen.html">GivenWhenThen | Martin Fowler</a></li>
+</ul>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

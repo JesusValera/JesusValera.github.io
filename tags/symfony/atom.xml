@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>JesusValera - Symfony</title>
+	<subtitle>JesusValera&#x27;s page</subtitle>
+	<link href="https://jesusvalerareales.com/tags/symfony/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://jesusvalerareales.com"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2022-10-21T00:00:00+00:00</updated>
+	<id>https://jesusvalerareales.com/tags/symfony/atom.xml</id>
+	<entry xml:lang="en">
+		<title>How does the Service Container work?</title>
+		<published>2022-10-21T00:00:00+00:00</published>
+		<updated>2022-10-21T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://jesusvalerareales.com/how-does-the-service-container-work/" type="text/html"/>
+		<id>https://jesusvalerareales.com/how-does-the-service-container-work/</id>
+		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;2022-10-21&#x2F;1.png&quot; alt=&quot;acropolis-greece&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+&lt;p&gt;A &lt;em&gt;Service Container&lt;&#x2F;em&gt; is basically a class that behaves like a &lt;em&gt;box&lt;&#x2F;em&gt;, we can think of it as a &lt;em&gt;singleton&lt;&#x2F;em&gt; object (but it
+is not, it is simply an object that is instantiated by the framework while it is being bootstrapped), on which we can
+declare all of our dependencies to be resolved automatically by the framework.&lt;&#x2F;p&gt;
+&lt;p&gt;The role of a &lt;em&gt;Service Container&lt;&#x2F;em&gt; is to define which classes (with their inner dependencies) should be resolved
+automatically.&lt;&#x2F;p&gt;
+&lt;p&gt;Usually, frameworks like Symfony or Laravel brings already a bunch of interfaces that will resolve automatically
+specific classes. So, for &lt;code&gt;\Psr\Log\LoggerInterface&lt;&#x2F;code&gt; there is somewhere a class that implements this interface
+like &lt;code&gt;Monolog&lt;&#x2F;code&gt; or any other.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s imagine we have a service whose dependency is a &lt;code&gt;UserRepository&lt;&#x2F;code&gt; (this dependency belongs to our use case, so it
+is not defined in the framework), additionally, depending on the environment, we want to inject
+a &lt;code&gt;PostgreSQLUserRepository&lt;&#x2F;code&gt; or a &lt;code&gt;InMemoryUserRespository&lt;&#x2F;code&gt; instance.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This post will be based on the two most popular PHP frameworks (Symfony &amp;amp; Laravel), but the idea works for any other
+programming language&#x2F;framework.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;symfony&quot;&gt;Symfony&lt;&#x2F;h2&gt;
+&lt;p&gt;We can define our services as &lt;code&gt;php&lt;&#x2F;code&gt; or &lt;code&gt;yaml&lt;&#x2F;code&gt; file extension (you can define this configuration directly in
+the &lt;code&gt;src&#x2F;Kernel.php&lt;&#x2F;code&gt; file).&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;# config&#x2F;services.php
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;namespace &lt;&#x2F;span&gt;&lt;span&gt;Symfony\Component\DependencyInjection\Loader\Configurator;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return function&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ContainerConfigurator &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$containerConfigurator&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$services &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$containerConfigurator&lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$services&lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;set&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        \App\Domain\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;&lt;b&gt;UserRepository&lt;&#x2F;b&gt;&lt;&#x2F;span&gt;&lt;span&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        \App\Infrastructure\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;&lt;b&gt;PostgreSQLUserRepository&lt;&#x2F;b&gt;&lt;&#x2F;span&gt;&lt;span&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class
+&lt;&#x2F;span&gt;&lt;span&gt;    );
+&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Alternatively, we can define a different instance for the &lt;em&gt;testing&lt;&#x2F;em&gt; environment:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;# config&#x2F;services_test.yml
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;namespace &lt;&#x2F;span&gt;&lt;span&gt;Symfony\Component\DependencyInjection\Loader\Configurator;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return function&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ContainerConfigurator &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$containerConfigurator&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$services &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$containerConfigurator&lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$services&lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;set&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        \App\Domain\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;&lt;b&gt;UserRepository&lt;&#x2F;b&gt;&lt;&#x2F;span&gt;&lt;span&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        \App\Infrastructure\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;&lt;b&gt;InMemoryUserRespository&lt;&#x2F;b&gt;&lt;&#x2F;span&gt;&lt;span&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class
+&lt;&#x2F;span&gt;&lt;span&gt;    );
+&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;laravel&quot;&gt;Laravel&lt;&#x2F;h2&gt;
+&lt;p&gt;In Laravel, however, you can do this in the &lt;code&gt;AppServiceProvider&lt;&#x2F;code&gt; class.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;namespace &lt;&#x2F;span&gt;&lt;span&gt;App\Providers;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;AppServiceProvider &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extends &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ServiceProvider
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;register&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;env&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;&#x27;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APP_ENV&lt;&#x2F;span&gt;&lt;span&gt;&#x27;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;) &lt;&#x2F;span&gt;&lt;span&gt;=== &#x27;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;test&lt;&#x2F;span&gt;&lt;span&gt;&#x27;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;app&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;bind&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;                App\Domain\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserRepository&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;                App\Infra\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;InMemoryUserRespository&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            );
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;app&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;bind&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;                App\Domain\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserRepository&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;                App\Infra\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;PostgreSQLUserRepository&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            );
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;boot&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;injecting-the-dependencies-in-our-services&quot;&gt;Injecting the dependencies in our services&lt;&#x2F;h3&gt;
+&lt;p&gt;So, from now on, the next time we try to inject our interface &lt;code&gt;UserRepository&lt;&#x2F;code&gt; as a dependency in the constructor of
+another class, eg:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserCreator
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;__construct&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;private UserRepository &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$userRepository&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    ) {}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The framework will handle it, checking firstly if we defined in our service provider the injected class and creating a
+new instance of it. In case this class has any dependency, the framework will resolve them automatically recursively by
+reflection until the class is ready, in case any dependency cannot be resolved or the dependency is a primitive, and we
+didn&#x27;t define the value, it will throw an exception.&lt;&#x2F;p&gt;
+&lt;div class=&quot;separator&quot;&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;Let’s go deeper into the technical details, how could you create such a dependency resolver? This is how we did in
+Gacela (&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;gacela-project&#x2F;container&#x2F;blob&#x2F;d3f0714306cbe1e77707741a4146411d84539f2a&#x2F;src&#x2F;Container&#x2F;DependencyResolver.php&quot;&gt;link&lt;&#x2F;a&gt;),
+and this is a simplified version of it:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;DependencyResolver
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;** &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;@var&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt; array&amp;lt;class-string,mixed&amp;gt; *&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;private &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;array &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$container&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;resolve&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;string &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$className&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;object
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$reflectionClass &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ReflectionClass&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$className&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$constructor &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$reflectionClass&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getConstructor&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;# If constructor is empty, we can do a `new $className()`
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;null &lt;&#x2F;span&gt;&lt;span&gt;=== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$constructor&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$reflectionClass&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;newInstance&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;# If not empty, let&#x27;s resolve the class dependencies
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$dependencies &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;[];
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;foreach &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$constructor&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getParameters&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;() &lt;&#x2F;span&gt;&lt;span&gt;as &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$parameter&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$paramName &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$parameter&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getType&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;()?-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$dependencies&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;container&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$paramName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;                ?? &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;resolve&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$paramName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;); &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;# 🌀 Recursion
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;# Finally, we store in the container the resolved class
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$class &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$reflectionClass&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;newInstanceArgs&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$dependencies&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;container&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$className&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;] &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This is the idea of what a framework does under the hood; ideally, we should use a cache layer.
+Using reflection takes a lot of resources, and it is very slow; additionally, we are not taking into consideration
+different scenarios like what to do depending on whether the resolved parameter is a primitive or even a callable.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;2022-10-21&#x2F;2.png&quot; alt=&quot;parthenon-greece&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference:&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;symfony.com&#x2F;doc&#x2F;current&#x2F;service_container.html&quot;&gt;Symfony — Service Container&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;laravel.com&#x2F;docs&#x2F;9.x&#x2F;container#binding-primitives&quot;&gt;Laravel — Service Container&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;gacela-project.com&#x2F;docs&#x2F;bootstrap&#x2F;#bindings&quot;&gt;Gacela — Bindings&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+</feed>

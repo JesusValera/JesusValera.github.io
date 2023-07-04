@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>Why you should not use Reflection when testing | JesusValera</title>
+
+
+
+<meta property="og:title" content="Why you should not use Reflection when testing">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="Do our tests get fragile when we use reflection? Do we get coupled to our code when we use it? Which alternatives do we have instead? Is it a good practice?">
+<meta property="og:description" content="Do our tests get fragile when we use reflection? Do we get coupled to our code when we use it? Which alternatives do we have instead? Is it a good practice?">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/why-you-should-not-use-reflection-when-testing/">
+<meta property="og:url" content="https://jesusvalerareales.com/why-you-should-not-use-reflection-when-testing/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2020-04-03T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "Do our tests get fragile when we use reflection? Do we get coupled to our code when we use it? Which alternatives do we have instead? Is it a good practice?",
+  "url": "https://jesusvalerareales.com/why-you-should-not-use-reflection-when-testing/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why you should not use Reflection when testing"
+  
+    
+    
+      "datePublished":"2020-04-03T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/why-you-should-not-use-reflection-when-testing/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">Why you should not use Reflection when testing</h1>
+    <h2 class="post-subtitle">with some code examples</h2>
+    <small>
+      <time datetime="2020-04-03" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        April  3, 2020 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        11 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <p><img src="/images/2020-04-03/1.png" alt="the-art-of-programming-meme" /></p>
+<span id="continue-reading"></span><h2 id="it-causes-bugs-when-refactoring-due-to-the-high-coupling">It causes bugs when refactoring due to the high coupling</h2>
+<p>When we use reflection, our tests get too fragile, we are allowing our tests to know so much information about the real
+implementation.
+We need to hardcode the method name, and we are coupling our test method to the production code.
+Furthermore, we need to write a lot about boilerplate to test a simple method.</p>
+<ul>
+<li><strong>Q</strong>: I need to get at least 80% of code coverage, how can I get it without the Reflection class?</li>
+<li><strong>A</strong>: You should test ONLY your public methods, and depending on the variables we pass, we should reach all the
+possible paths.</li>
+</ul>
+<p>So, we do not need to test the private methods per se; they are called indirectly from our public functions.</p>
+<h2 id="comparison-between-standard-and-reflection-tests">Comparison between standard and Reflection tests</h2>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php </span><span style="color:#b48ead;">declare</span><span>(</span><span style="color:#d08770;">strict_types</span><span>=</span><span style="color:#d08770;">1</span><span>);
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">Addition
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">simpleOperation</span><span style="color:#343d46;">(</span><span style="color:#b48ead;">int </span><span>$</span><span style="color:#bf616a;">number1</span><span style="color:#343d46;">, </span><span style="color:#b48ead;">int </span><span>$</span><span style="color:#bf616a;">number2</span><span style="color:#343d46;">): </span><span style="color:#b48ead;">int
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">number1 </span><span>+ $</span><span style="color:#bf616a;">number2</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">Operation
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">addition</span><span style="color:#343d46;">(</span><span style="color:#b48ead;">int </span><span>$</span><span style="color:#bf616a;">number1</span><span style="color:#343d46;">, </span><span style="color:#b48ead;">int </span><span>$</span><span style="color:#bf616a;">number2</span><span style="color:#343d46;">): </span><span style="color:#b48ead;">int
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return </span><span style="color:#343d46;">(</span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Addition</span><span style="color:#343d46;">())-&gt;</span><span style="color:#bf616a;">simpleOperation</span><span style="color:#343d46;">(</span><span>$</span><span style="color:#bf616a;">number1</span><span style="color:#343d46;">, </span><span>$</span><span style="color:#bf616a;">number2</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">OperationTest
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#a7adba;">// Without Reflection.
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">testSimpleOperationWithoutReflection</span><span style="color:#343d46;">(): </span><span style="color:#d08770;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">operation </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Operation</span><span style="color:#343d46;">();
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">assertSame</span><span style="color:#343d46;">(</span><span style="color:#d08770;">4</span><span style="color:#343d46;">, </span><span>$</span><span style="color:#bf616a;">operation</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">addition</span><span style="color:#343d46;">(</span><span style="color:#d08770;">2</span><span style="color:#343d46;">, </span><span style="color:#d08770;">2</span><span style="color:#343d46;">));
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#a7adba;">// With Reflection.
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">testSimpleOperationWithReflection</span><span style="color:#343d46;">(): </span><span style="color:#d08770;">void
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">addition </span><span>= $</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">createPartialMock</span><span style="color:#343d46;">(</span><span style="color:#d08770;">Addition</span><span style="color:#343d46;">::</span><span style="color:#d08770;">class</span><span style="color:#343d46;">, [
+</span><span style="color:#343d46;">            </span><span>&#39;</span><span style="color:#a3be8c;">simpleOperation</span><span>&#39;</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        ]);
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">result </span><span>= </span><span style="color:#d08770;">2 </span><span>+ </span><span style="color:#d08770;">2</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">addition
+</span><span style="color:#343d46;">            -&gt;</span><span style="color:#bf616a;">expects</span><span style="color:#343d46;">(</span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">once</span><span style="color:#343d46;">())
+</span><span style="color:#343d46;">            -&gt;</span><span style="color:#bf616a;">method</span><span style="color:#343d46;">(</span><span>&#39;</span><span style="color:#a3be8c;">simpleOperation</span><span>&#39;</span><span style="color:#343d46;">)
+</span><span style="color:#343d46;">            -&gt;</span><span style="color:#bf616a;">willReturn</span><span style="color:#343d46;">(</span><span>$</span><span style="color:#bf616a;">result</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">operation </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#343d46;">\</span><span style="color:#d08770;">ReflectionClass</span><span style="color:#343d46;">(</span><span style="color:#d08770;">Operation</span><span style="color:#343d46;">::</span><span style="color:#d08770;">class</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">reflection </span><span>= $</span><span style="color:#bf616a;">operation</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">invoke</span><span style="color:#343d46;">(</span><span>$</span><span style="color:#bf616a;">addition</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">        </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">assertSame</span><span style="color:#343d46;">(</span><span>$</span><span style="color:#bf616a;">result</span><span style="color:#343d46;">, </span><span>$</span><span style="color:#bf616a;">reflection</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">addition</span><span style="color:#343d46;">());
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>What would happen if we modified the <code>simpleOperation()</code> method from the Addition class to the following, and we run the
+tests?</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">Addition
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">   </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">simpleOperation</span><span style="color:#343d46;">(</span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">$number1</span><span style="color:#343d46;">, </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">$number2</span><span style="color:#343d46;">): </span><span style="color:#b48ead;">int
+</span><span style="color:#343d46;">   {
+</span><span style="color:#343d46;">       </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$number1 </span><span>- </span><span style="color:#bf616a;">$number2</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">   }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<ul>
+<li><strong>Q</strong>: Will the ‘standard’ fail? What about the Reflection one?</li>
+<li><strong>A</strong>: The standard will fail because we expect 4 as a result, but we got a 0.
+However, the reflection will pass, because we are not focusing on the real implementation, we are creating a false
+positive which can be dangerous.</li>
+</ul>
+<h2 id="dealing-with-some-problems-when-not-using-reflection">Dealing with some problems when not using Reflection</h2>
+<p>Let me show you a more realistic example (idea from 
+<a href="https://phptherightway.com/pages/Design-Patterns.html">PHPTheRightWay</a>):</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#b48ead;">final readonly class </span><span style="color:#d08770;">Vehicle
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public </span><span style="color:#d08770;">string </span><span style="color:#bf616a;">$model</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public </span><span style="color:#d08770;">int </span><span style="color:#bf616a;">$price</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#96b5b4;">__construct</span><span style="color:#343d46;">(</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">$model</span><span style="color:#343d46;">)
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#bf616a;">$this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">model </span><span>= </span><span style="color:#bf616a;">$model</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">        </span><span style="color:#bf616a;">$this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">price </span><span>= </span><span style="color:#96b5b4;">random_int</span><span style="color:#343d46;">(</span><span style="color:#d08770;">1000</span><span style="color:#343d46;">, </span><span style="color:#d08770;">3000</span><span style="color:#343d46;">);
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>To test the vehicle’s model is easy, but what about the price?</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php"><code class="language-php" data-lang="php"><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">testModel</span><span>(): </span><span style="color:#d08770;">void
+</span><span>{
+</span><span>    </span><span style="color:#bf616a;">$model </span><span>= '</span><span style="color:#a3be8c;">Seat</span><span>';
+</span><span>    </span><span style="color:#bf616a;">$vehicle </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Vehicle</span><span>(</span><span style="color:#bf616a;">$model</span><span>);
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">assertSame</span><span>(</span><span style="color:#bf616a;">$model</span><span>, </span><span style="color:#bf616a;">$vehicle</span><span>-&gt;</span><span style="color:#bf616a;">model</span><span>());
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">testPrice</span><span>(): </span><span style="color:#d08770;">void
+</span><span>{
+</span><span>    </span><span style="color:#bf616a;">$model </span><span>= '</span><span style="color:#a3be8c;">Seat</span><span>';
+</span><span>    </span><span style="color:#bf616a;">$vehicle </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Vehicle</span><span>(</span><span style="color:#bf616a;">$model</span><span>);
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">assertSame</span><span>( ¿¿?? , </span><span style="color:#bf616a;">$vehicle</span><span>-&gt;</span><span style="color:#bf616a;">price</span><span>());
+</span><span>}
+</span></code></pre>
+<p>One possible solution could be using the Reflection class to be able to set explicitly the price like:</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php"><code class="language-php" data-lang="php"><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">testGetPrice</span><span>(): </span><span style="color:#d08770;">void
+</span><span>{
+</span><span>     </span><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> Vehicle|MockObject $vehicle */
+</span><span>     </span><span style="color:#bf616a;">$vehicle </span><span>= </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">createPartialMock</span><span>(</span><span style="color:#d08770;">Vehicle</span><span>::</span><span style="color:#d08770;">class</span><span>, []);
+</span><span>
+</span><span>     </span><span style="color:#bf616a;">$reflection </span><span>= </span><span style="color:#b48ead;">new </span><span>\</span><span style="color:#d08770;">ReflectionProperty</span><span>(</span><span style="color:#d08770;">Vehicle</span><span>::</span><span style="color:#d08770;">class</span><span>, '</span><span style="color:#a3be8c;">price</span><span>');
+</span><span>     </span><span style="color:#bf616a;">$reflection</span><span>-&gt;</span><span style="color:#bf616a;">setAccessible</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span><span>     </span><span style="color:#bf616a;">$price </span><span>= </span><span style="color:#d08770;">200</span><span>;
+</span><span>     </span><span style="color:#bf616a;">$reflection</span><span>-&gt;</span><span style="color:#bf616a;">setValue</span><span>(</span><span style="color:#bf616a;">$vehicle</span><span>, </span><span style="color:#bf616a;">$price</span><span>);
+</span><span>
+</span><span>     </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">assertSame</span><span>(</span><span style="color:#bf616a;">$price</span><span>, </span><span style="color:#bf616a;">$vehicle</span><span>-&gt;</span><span style="color:#bf616a;">price</span><span>());
+</span><span>}
+</span></code></pre>
+<p>But our Vehicle class is final, so we cannot perform this test, also, we said we shouldn’t use the Reflection class, so,
+probably we are doing something wrong in this class (TIP: you should make <strong>final</strong> your classes by default 😉).</p>
+<ul>
+<li><strong>Q</strong>: So what is the problem here?</li>
+<li><strong>A</strong>: The problem here is that we are performing an action inside the class (on the constructor) to which we do not
+have access from the outside.</li>
+</ul>
+<p>One solution could be to inject the value in the constructor like:</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#b48ead;">final </span><span style="color:#d08770;">readonly </span><span style="color:#b48ead;">class </span><span style="color:#d08770;">Vehicle
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#96b5b4;">__construct</span><span style="color:#343d46;">(
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">$model</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">$price</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">    ) {
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>And when we want to create this class, we could pass the final price as:</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php"><code class="language-php" data-lang="php"><span style="color:#bf616a;">$vehiclePrice </span><span>= </span><span style="color:#96b5b4;">random_int</span><span>(</span><span style="color:#d08770;">1000</span><span>, </span><span style="color:#d08770;">3000</span><span>);
+</span><span style="color:#bf616a;">$vehicle </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Vehicle</span><span>(‘</span><span style="color:#d08770;">Seat</span><span>’, </span><span style="color:#bf616a;">$vehiclePrice</span><span>);
+</span></code></pre>
+<p>So, our price test could be like:</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">testPrice</span><span>(): </span><span style="color:#d08770;">void
+</span><span>{
+</span><span>    </span><span style="color:#bf616a;">$price </span><span>= </span><span style="color:#d08770;">200</span><span>;
+</span><span>    </span><span style="color:#bf616a;">$vehicle </span><span>= </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">Vehicle</span><span>('</span><span style="color:#a3be8c;">foo</span><span>', </span><span style="color:#bf616a;">$price</span><span>);
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">assertSame</span><span>(</span><span style="color:#bf616a;">$price</span><span>, </span><span style="color:#bf616a;">$vehicle</span><span>-&gt;</span><span style="color:#bf616a;">price</span><span>());
+</span><span>}
+</span></code></pre>
+<p>To sum up, I don’t recommend using the Reflection class anywhere in your code unless you are very aware of what you are
+doing, usually, there are alternative implementations to what you want to achieve without using it.</p>
+<p><img src="/images/2020-04-03/2.png" alt="stone-figures" /></p>
+<p>Additionally, defining our classes as <code>final</code> helps us to have a better design, not only because it forbid us the use of
+Reflection, but also it prevents us from mocking our business logic, which is good.</p>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>The importance of tests in our software | JesusValera</title>
+
+
+
+<meta property="og:title" content="The importance of tests in our software">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="A test is an empirical assertion that demonstrates the behaviour of expected functionality. Examples of test types, suggestions and their importance">
+<meta property="og:description" content="A test is an empirical assertion that demonstrates the behaviour of expected functionality. Examples of test types, suggestions and their importance">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/the-importance-of-tests-in-our-software/">
+<meta property="og:url" content="https://jesusvalerareales.com/the-importance-of-tests-in-our-software/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2020-03-20T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "A test is an empirical assertion that demonstrates the behaviour of expected functionality. Examples of test types, suggestions and their importance",
+  "url": "https://jesusvalerareales.com/the-importance-of-tests-in-our-software/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The importance of tests in our software"
+  
+    
+    
+      "datePublished":"2020-03-20T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/the-importance-of-tests-in-our-software/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">The importance of tests in our software</h1>
+    <h2 class="post-subtitle">Introduction to unit testing with PHP</h2>
+    <small>
+      <time datetime="2020-03-20" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        March 20, 2020 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        7 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <h2 id="1-what-is-a-test">1. What is a test?</h2>
+<p>A test is an empirical assertion that demonstrates the behaviour of an expected functionality from something.</p>
+<span id="continue-reading"></span>
+<p><img src="/images/2020-03-20/1.png" alt="the-art-of-programming-meme" /></p>
+<p>The tests are classified by what they verify, the most important ones are the following:</p>
+<h3 id="functional-tests">Functional tests</h3>
+<ul>
+<li>Unit test</li>
+<li>Component test</li>
+<li>Integration test</li>
+<li>System test</li>
+<li>Smoke test</li>
+<li>Non-functional test</li>
+</ul>
+<h3 id="compatibility-test">Compatibility test</h3>
+<ul>
+<li>Security test</li>
+<li>Stress test</li>
+<li>Usability test</li>
+</ul>
+<p>A software needs all of them, but the most important concerning developers are unit, integration and functional tests.</p>
+<h2 id="2-differences-between-test-types">2. Differences between test types</h2>
+<h3 id="unit-test">Unit test</h3>
+<img src="/images/2020-03-20/2.png" alt="given-when-then" style="width: 80%">
+<p>What is a unit test? We could consider, in our context, a public method from one API class. That means, a unit test is a
+verification between the current input and expected output, it is an isolated logic and decoupled from the outside. It
+is recommendable to use interfaces in order to invert the dependencies in our application (~DIP: Dependency Inversion
+Principle).</p>
+<p>Indeed, we can also depend on external dependencies using mocks or stubs.</p>
+<p>The benefit of using unit test is that they took less time on execution, for that reason, they can be launched more
+often. Also, they force you to write less coupled code, doing better software design.</p>
+<p>So, a unit test is, therefore, the demonstration of an isolated functionality from the outside.</p>
+<p>The unit tests give you:</p>
+<ul>
+<li>A simple way to test your code exhaustively and independently</li>
+<li>They command you to the portion of code that causes the problem</li>
+</ul>
+<p>A test is not a unit test if…</p>
+<ul>
+<li>it performs queries to the database</li>
+<li>it connects in any way with the network</li>
+<li>it operates with a file system</li>
+<li>it cannot be launched in parallel with other unit tests</li>
+<li>you need to modify any file (config file for example) to be able to run it</li>
+</ul>
+<p>They are also known as ‘white box testing’. We know the internal code from the method.</p>
+<p>The tests are focused on the object state.</p>
+<p>There are frameworks for automatizing this task, the most popular is the xUnit family: JUnit, PHPUnit…</p>
+<h3 id="integration-test">Integration test</h3>
+<p>The integration tests are similar to the units except that they are focused on proving the interaction between two or
+more components together, they could be classes, modules, etc…</p>
+<p>Further, this kind of tests can connect to the database, to the network, filesystem, etc.</p>
+<p>The integration tests are slower than unit tests due to their complexity, besides, sometimes it’s needed to load
+specific configuration in order to work properly.</p>
+<p>These kinds of tests are dependent on the environment, I mean, if a test fails, the problem could be a different
+configuration from one environment to another.</p>
+<p>You can even create integration tests with PHPUnit, the <code>Unit</code> in the name is just a convention.</p>
+<h3 id="functional-test">Functional test</h3>
+<p>The functional tests are called end-to-end (E2E) or browser testing.</p>
+<p>These kinds of tests do not check the how, but the what, I mean, if that specific test executes some magic but the
+expected result is whatever we want.</p>
+<p>In other words, we do not care what the developer did, we care about the output as we were the client.</p>
+<img src="/images/2020-03-20/3.png" alt="functional-test" style="width: 80%">
+<p>For example, if we send a form with a wrong value, we expect to see an error message in a specific field, we do not care
+about what regular expression is and why it failed.</p>
+<p>Those tests are also known as “black-box testing”. We do not know the code we are testing. They focus on object
+behaviour.</p>
+<p>One of the best known is Selenium.</p>
+<h2 id="3-cohn-pyramid">3. Cohn pyramid</h2>
+<img src="/images/2020-03-20/4.png" alt="cohn-pyramid" style="width: 80%">
+<p>There are different test types as we have just seen, even each one is focused on a particular issue from the
+application.</p>
+<p>At the pyramid bottom, the <strong>unit tests</strong> are accommodated, in the middle the <strong>integration</strong> ones and on the top the
+<strong>UI</strong> tests.</p>
+<p>The <strong>unit tests</strong> should represent the majority of them. Those tests give specific and really fast feedback to the user
+(50%-60%).</p>
+<p>The <strong>integration tests</strong> are slower than the units and are focused on complex tasks like HTTP requests, database
+connections, cache operations and other stuff which require some application load (20%-40%).</p>
+<p>Lastly, the <strong>UI tests</strong> at the pyramid top (0%-10%).</p>
+<p>Those tests are the most delicate, took a lot of time and they are harder to write and maintain.</p>
+<ul>
+<li>When we said they are delicate, we mean they are too coupled to the source code and a minimal change in the code could
+provoke a failing test</li>
+<li>They took so much time to be executed; they used to apply a crawler object, which consists of a browser emulator that
+is capable of seeing the status page, clicking on some buttons, reading any DOM element and so on. Indeed, it is
+harder to find the failure in an ‘end-to-end’ test because they are unforeseen and took more time</li>
+</ul>
+<p>It is not the same legacy as a greenfield project.</p>
+<p>Depending on it, those values may vary.</p>
+<p>In legacy projects which are really coupled to 3rd party libraries like the database, sometimes it is really hard to
+write unit tests. The recommendation is to do the inverse, creating first integration tests to check you do not break
+something and then re-factorize the code with unit tests step by step.</p>
+<h2 id="4-methodologies">4. Methodologies</h2>
+<h3 id="test-last">Test-Last</h3>
+<p>This is the worst methodology and sadly the most common.</p>
+<p>It happens when you type the tests AFTER you wrote the production code.</p>
+<h4 id="pros">Pros:</h4>
+<ul>
+<li>At least you have tests (it is dangerous because you can fall into the false sensation of coverage and false
+positives…)</li>
+</ul>
+<h4 id="cons">Cons:</h4>
+<ul>
+<li>It is boring because you already have the sensation you are working on something that is already done</li>
+</ul>
+<h3 id="test-first">Test-First</h3>
+<p>This methodology is when you type the tests BEFORE you wrote the production code.</p>
+<h4 id="pros-1">Pros:</h4>
+<ul>
+<li>This methodology focuses only on green tests</li>
+<li>It is great for integration tests</li>
+</ul>
+<h4 id="cons-1">Cons:</h4>
+<ul>
+<li>You do not care so much about a good design of the tests nor the production code</li>
+</ul>
+<h3 id="tdd-test-driven-development">TDD (test-driven development)</h3>
+<img src="/images/2020-03-20/5.png" alt="tdd" style="width: 80%">
+<p>This methodology is when you type the tests BEFORE you wrote the production code BUT you are refactoring the code as
+long as you are working on them.</p>
+<p>First, you wrote the test code getting the red light and ONLY then, you work on the implementation to get the green
+light. Afterwards, you refactor it and so on.</p>
+<h4 id="cons-2">Cons:</h4>
+<ul>
+<li>The sensation of slower development</li>
+<li>It requires an important learning curve</li>
+<li>Its implementation is complex in legacy codes</li>
+</ul>
+<h2 id="5-unit-test-resources">5. Unit test resources</h2>
+<p>We use to say “mock” when we want to reference a test double, but there are actually five different types and mock is
+only one of them.</p>
+<p>It can really help you understand what you’re trying to accomplish with your test if you know about what you are doing.</p>
+<h3 id="test-doubles">Test doubles</h3>
+<p>A Test Double is any object that stands in for a real dependency in automated testing. Usually, in PHPUnit, we make test
+doubles for other classes, but you can also double built-in PHP functions or closures.</p>
+<p>The five types of Test Doubles are:</p>
+<ul>
+<li><strong>Dummy</strong> — Used only as a placeholder when an argument needs to be filled in</li>
+<li><strong>Stub</strong> — Provides fake data to the System Under Test</li>
+<li><strong>Spy</strong> — Records information about how it is used and can provide that information back</li>
+<li><strong>Mock</strong> — Defines an expectation on how it will be used, and with what parameters. Will cause a test to fail
+automatically if the expectation isn’t met</li>
+<li><strong>Fake</strong> — An actual implementation of the contract, but is unsuitable for production</li>
+</ul>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

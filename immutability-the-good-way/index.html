@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>Immutability, the good way | JesusValera</title>
+
+
+
+<meta property="og:title" content="Immutability, the good way">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="An immutable object will remain in the same state as it was created. Design and implementation will be much easier and more consistent over the time">
+<meta property="og:description" content="An immutable object will remain in the same state as it was created. Design and implementation will be much easier and more consistent over the time">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/immutability-the-good-way/">
+<meta property="og:url" content="https://jesusvalerareales.com/immutability-the-good-way/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2020-08-20T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "An immutable object will remain in the same state as it was created. Design and implementation will be much easier and more consistent over the time",
+  "url": "https://jesusvalerareales.com/immutability-the-good-way/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Immutability, the good way"
+  
+    
+    
+      "datePublished":"2020-08-20T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/immutability-the-good-way/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">Immutability, the good way</h1>
+    <h2 class="post-subtitle">Practical examples of immutability in PHP</h2>
+    <small>
+      <time datetime="2020-08-20" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        August 20, 2020 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        5 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <p>A <strong>mutable</strong> object can be modified after its creation, an <strong>immutable</strong> cannot.</p>
+<img alt="parliament-budapest" src="/images/2020-08-20/1.png" style="width: 100%"/>
+<span id="continue-reading"></span>
+<p>An immutable object will remain in the same state as it was created. Design and implementation will be much easier and
+consistent. In the case of problems, locate a potential bug is faster due that it won't have side effects.</p>
+<p>Although, creating immutable objects sometimes require more code, and it doesn't fit in all scenarios (entities need to
+be mutable for example).</p>
+<h2 id="mutability-examples-and-their-impacts">Mutability examples and their impacts</h2>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#b48ead;">final  class </span><span style="color:#d08770;">ProductTransfer
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#96b5b4;">__construct</span><span style="color:#343d46;">(
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">string </span><span>$</span><span style="color:#bf616a;">name</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">float </span><span>$</span><span style="color:#bf616a;">price</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">array </span><span>$</span><span style="color:#bf616a;">tags</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public</span><span style="color:#343d46;"> \</span><span style="color:#d08770;">DateTime </span><span>$</span><span style="color:#bf616a;">releaseDate</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">    ) {}
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">toString</span><span style="color:#343d46;">(): </span><span style="color:#b48ead;">string
+</span><span style="color:#343d46;">    {
+</span><span style="color:#343d46;">        </span><span style="color:#b48ead;">return </span><span style="color:#96b5b4;">sprintf</span><span style="color:#343d46;">(
+</span><span style="color:#343d46;">            </span><span>&#39;</span><span style="color:#a3be8c;">Name: %s\nPrice: %.2f\nTags: {%s}\nRelease date: %s\n</span><span>&#39;</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">            </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">name</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">            </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">price</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">            </span><span style="color:#96b5b4;">implode</span><span style="color:#343d46;">(</span><span>&#39;</span><span style="color:#a3be8c;">, </span><span>&#39;</span><span style="color:#343d46;">, </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">tags</span><span style="color:#343d46;">),
+</span><span style="color:#343d46;">            </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">releaseDate</span><span style="color:#343d46;">-&gt;</span><span style="color:#bf616a;">format</span><span style="color:#343d46;">(</span><span>&#39;</span><span style="color:#a3be8c;">Y-m-d</span><span>&#39;</span><span style="color:#343d46;">)
+</span><span style="color:#343d46;">        );
+</span><span style="color:#343d46;">    }
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span>---
+</span><span>
+</span><span>(</span><span style="color:#b48ead;">new </span><span style="color:#d08770;">ProductTransfer</span><span>(
+</span><span>    </span><span style="color:#d08770;">name</span><span>: &#39;</span><span style="color:#a3be8c;">Asus 452X</span><span>&#39;,
+</span><span>    </span><span style="color:#d08770;">price</span><span>: </span><span style="color:#d08770;">1024.5</span><span>,
+</span><span>    </span><span style="color:#d08770;">tags</span><span>: [&#39;</span><span style="color:#a3be8c;">computer</span><span>&#39;, &#39;</span><span style="color:#a3be8c;">asus</span><span>&#39;],
+</span><span>    </span><span style="color:#d08770;">releaseDate</span><span>: \</span><span style="color:#d08770;">DateTime</span><span>::</span><span style="color:#bf616a;">createFromFormat</span><span>(&#39;</span><span style="color:#a3be8c;">Y-m-d</span><span>&#39;, &#39;</span><span style="color:#a3be8c;">1999-12-31</span><span>&#39;)
+</span><span>))-&gt;</span><span style="color:#bf616a;">toString</span><span>();
+</span><span>
+</span><span>*** </span><span style="color:#d08770;">OUTPUT </span><span>***
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Name</span><span>: </span><span style="color:#d08770;">Asus</span><span> 452X
+</span><span>&gt; </span><span style="color:#d08770;">Price</span><span>: </span><span style="color:#d08770;">1024.50
+</span><span>&gt; </span><span style="color:#d08770;">Tags</span><span>: {</span><span style="color:#d08770;">computer</span><span>, </span><span style="color:#d08770;">asus</span><span>}
+</span><span>&gt; </span><span style="color:#d08770;">Release date</span><span>: </span><span style="color:#d08770;">1999</span><span>-</span><span style="color:#d08770;">12</span><span>-</span><span style="color:#d08770;">31
+</span></code></pre>
+<p>We are going to store some object properties in a different variable. We will modify their values and finally print the
+variable and the object itself.</p>
+<h2 id="modifying-the-name-being-a-string">Modifying the name (being a string)</h2>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span>$</span><span style="color:#bf616a;">name </span><span>= $</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">name</span><span>;
+</span><span>$</span><span style="color:#bf616a;">name </span><span>= &#39;</span><span style="color:#a3be8c;">Acer FC-288</span><span>&#39;;
+</span><span>
+</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Modified name: {</span><span>$</span><span style="color:#bf616a;">name</span><span style="color:#a3be8c;">}</span><span>&quot; . PHP_EOL;
+</span><span style="color:#96b5b4;">echo </span><span>$</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">toString</span><span>();
+</span><span>
+</span><span>*** </span><span style="color:#d08770;">OUTPUT </span><span>***
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Modified name</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">Acer FC</span><span>-</span><span style="color:#d08770;">288</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Name</span><span>: </span><span style="color:#d08770;">Asus</span><span> 452X
+</span><span>&gt; </span><span style="color:#d08770;">Price</span><span>: </span><span style="color:#d08770;">1024.50
+</span><span>&gt; </span><span style="color:#d08770;">Tags</span><span>: {</span><span style="color:#d08770;">computer</span><span>, </span><span style="color:#d08770;">asus</span><span>}
+</span><span>&gt; </span><span style="color:#d08770;">Release date</span><span>: </span><span style="color:#d08770;">1999</span><span>-</span><span style="color:#d08770;">12</span><span>-</span><span style="color:#d08770;">31
+</span></code></pre>
+<p>Strings in PHP are copied by value, therefore. When we modify the variable $name the original value from $product-&gt;name
+will remain the same.</p>
+<h2 id="modifying-the-price-being-a-number">Modifying the price (being a number)</h2>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span>$</span><span style="color:#bf616a;">price </span><span>= $</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">price</span><span>;
+</span><span>$</span><span style="color:#bf616a;">price </span><span>= </span><span style="color:#d08770;">1.0</span><span>;
+</span><span>
+</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Modified price: {</span><span>$</span><span style="color:#bf616a;">price</span><span style="color:#a3be8c;">}</span><span>&quot; . PHP_EOL;
+</span><span style="color:#96b5b4;">echo </span><span>$</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">toString</span><span>();
+</span><span>
+</span><span>*** </span><span style="color:#d08770;">OUTPUT </span><span>***
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Modified price</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">1.0</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Name</span><span>: </span><span style="color:#d08770;">Asus</span><span> 452X
+</span><span>&gt; </span><span style="color:#d08770;">Price</span><span>: </span><span style="color:#d08770;">1024.50
+</span><span>&gt; </span><span style="color:#d08770;">Tags</span><span>: {</span><span style="color:#d08770;">computer</span><span>, </span><span style="color:#d08770;">asus</span><span>}
+</span><span>&gt; </span><span style="color:#d08770;">Release date</span><span>: </span><span style="color:#d08770;">1999</span><span>-</span><span style="color:#d08770;">12</span><span>-</span><span style="color:#d08770;">31
+</span></code></pre>
+<p>Numbers in PHP are also copied by value.</p>
+<h2 id="modifying-the-tags-being-an-array">Modifying the tags (being an array)</h2>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span>$</span><span style="color:#bf616a;">tags </span><span>= $</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">tags</span><span>;
+</span><span>$</span><span style="color:#bf616a;">tags </span><span>= [&#39;</span><span style="color:#a3be8c;">phone</span><span>&#39;, &#39;</span><span style="color:#a3be8c;">reconditioned</span><span>&#39;];
+</span><span>
+</span><span style="color:#96b5b4;">echo sprintf</span><span>(&#39;</span><span style="color:#a3be8c;">Modified tags: {%s}</span><span>&#39; . PHP_EOL, </span><span style="color:#96b5b4;">implode</span><span>(&#39;</span><span style="color:#a3be8c;">, </span><span>&#39;, $</span><span style="color:#bf616a;">tags</span><span>));
+</span><span style="color:#96b5b4;">echo </span><span>$</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">toString</span><span>();
+</span><span>
+</span><span>*** </span><span style="color:#d08770;">OUTPUT </span><span>***
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Modified tags</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;{</span><span style="color:#d08770;">phone</span><span>, </span><span style="color:#d08770;">reconditioned</span><span>}&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Name</span><span>: </span><span style="color:#d08770;">Asus</span><span> 452X
+</span><span>&gt; </span><span style="color:#d08770;">Price</span><span>: </span><span style="color:#d08770;">1024.50
+</span><span>&gt; </span><span style="color:#d08770;">Tags</span><span>: {</span><span style="color:#d08770;">computer</span><span>, </span><span style="color:#d08770;">asus</span><span>}
+</span><span>&gt; </span><span style="color:#d08770;">Release date</span><span>: </span><span style="color:#d08770;">1999</span><span>-</span><span style="color:#d08770;">12</span><span>-</span><span style="color:#d08770;">31
+</span></code></pre>
+<p>In Java, arrays are passed by reference, however. In PHP they are considered as primitive types, which means if you have
+an array with 5.000 elements and you pass it to a function, that array will be fully copied inside that function and any
+modification won’t alter the original one.</p>
+<h2 id="modifying-the-released-date-being-an-object">Modifying the released date (being an object)</h2>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span>$</span><span style="color:#bf616a;">date </span><span>= $</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">releaseDate</span><span>;
+</span><span>$</span><span style="color:#bf616a;">date </span><span>= $</span><span style="color:#bf616a;">date</span><span>-&gt;</span><span style="color:#bf616a;">modify</span><span>(&lt;</span><span style="color:#d08770;">b</span><span>&gt;&#39;</span><span style="color:#a3be8c;">+1 day</span><span>&#39;&lt;/</span><span style="color:#d08770;">b</span><span>&gt;);
+</span><span>
+</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Modified released date: {</span><span>$</span><span style="color:#bf616a;">date</span><span style="color:#a3be8c;">-&gt;</span><span style="color:#bf616a;">format</span><span style="color:#a3be8c;">(</span><span>&#39;</span><span style="color:#a3be8c;">Y-m-d</span><span>&#39;</span><span style="color:#a3be8c;">)}</span><span>&quot; . PHP_EOL;
+</span><span style="color:#96b5b4;">echo </span><span>$</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">toString</span><span>();
+</span><span>
+</span><span>*** </span><span style="color:#d08770;">OUTPUT </span><span>***
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Modified release date</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">2000</span><span>-</span><span style="color:#d08770;">01</span><span>-</span><span style="color:#d08770;">01</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Name</span><span>: </span><span style="color:#d08770;">Asus</span><span> 452X
+</span><span>&gt; </span><span style="color:#d08770;">Price</span><span>: </span><span style="color:#d08770;">1024.50
+</span><span>&gt; </span><span style="color:#d08770;">Tags</span><span>: {</span><span style="color:#d08770;">computer</span><span>, </span><span style="color:#d08770;">asus</span><span>}
+</span><span>&gt; </span><span style="color:#d08770;">Release date</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">2000</span><span>-</span><span style="color:#d08770;">01</span><span>-</span><span style="color:#d08770;">01</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span></code></pre>
+<p>In OOP languages, objects are passed (or assigned) by reference: any modification will alter the original object.</p>
+<h2 id="trying-immutability">Trying immutability</h2>
+<p>If we replace the <code>\DateTime</code> by a <code>\DateTimeImmutable</code> class, let’s see what happens with the previous example.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#b48ead;">final class </span><span style="color:#d08770;">ProductTransfer
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#96b5b4;">__construct</span><span style="color:#343d46;">(
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">string </span><span>$</span><span style="color:#bf616a;">name</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">float </span><span>$</span><span style="color:#bf616a;">price</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">array </span><span>$</span><span style="color:#bf616a;">tags</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public</span><span style="color:#343d46;"> \</span><span style="color:#d08770;">DateTimeImmutable </span><span>$</span><span style="color:#bf616a;">releaseDate
+</span><span style="color:#343d46;">    ) {}
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#a7adba;">// . . .
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span>---
+</span><span>
+</span><span>$</span><span style="color:#bf616a;">date </span><span>= $</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">releaseDate</span><span>;
+</span><span>$</span><span style="color:#bf616a;">date </span><span>= $</span><span style="color:#bf616a;">date</span><span>-&gt;</span><span style="color:#bf616a;">modify</span><span>(&lt;</span><span style="color:#d08770;">b</span><span>&gt;&#39;</span><span style="color:#a3be8c;">+1 day</span><span>&#39;&lt;/</span><span style="color:#d08770;">b</span><span>&gt;);
+</span><span>
+</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Modified released date: {</span><span>$</span><span style="color:#bf616a;">date</span><span style="color:#a3be8c;">-&gt;</span><span style="color:#bf616a;">format</span><span style="color:#a3be8c;">(</span><span>&#39;</span><span style="color:#a3be8c;">Y-m-d</span><span>&#39;</span><span style="color:#a3be8c;">)}</span><span>&quot; . PHP_EOL;
+</span><span style="color:#96b5b4;">echo </span><span>$</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">toString</span><span>();
+</span><span>
+</span><span>*** </span><span style="color:#d08770;">OUTPUT </span><span>***
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Modified date</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">2000</span><span>-</span><span style="color:#d08770;">01</span><span>-</span><span style="color:#d08770;">01</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Name</span><span>: </span><span style="color:#d08770;">Asus</span><span> 452X
+</span><span>&gt; </span><span style="color:#d08770;">Price</span><span>: </span><span style="color:#d08770;">1024.50
+</span><span>&gt; </span><span style="color:#d08770;">Tags</span><span>: {</span><span style="color:#d08770;">computer</span><span>, </span><span style="color:#d08770;">asus</span><span>}
+</span><span>&gt; </span><span style="color:#d08770;">Release date</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">1999</span><span>-</span><span style="color:#d08770;">12</span><span>-</span><span style="color:#d08770;">310</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span></code></pre>
+<p>This is happening because what <em>\DateTimeImmutable</em> does is to create a new instance of the same object with the same
+values.</p>
+<p>Perfect, now our code is working like a charm, doesn't it? Well, take a look at the following snippet.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> \DateTimeImmutable $date */
+</span><span>$</span><span style="color:#bf616a;">date </span><span>= &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#b48ead;">&amp;</span><span>$</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">releaseDate</span><span>;&lt;/</span><span style="color:#d08770;">b</span><span>&gt; </span><span style="color:#a7adba;">// Notice the &#39;&amp;&#39; character 👀
+</span><span>$</span><span style="color:#bf616a;">date </span><span>= $</span><span style="color:#bf616a;">date</span><span>-&gt;</span><span style="color:#bf616a;">modify</span><span>(&lt;</span><span style="color:#d08770;">b</span><span>&gt;&#39;</span><span style="color:#a3be8c;">+1 day</span><span>&#39;&lt;/</span><span style="color:#d08770;">b</span><span>&gt;);
+</span><span>
+</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Modified released date: {</span><span>$</span><span style="color:#bf616a;">date</span><span style="color:#a3be8c;">-&gt;</span><span style="color:#bf616a;">format</span><span style="color:#a3be8c;">(</span><span>&#39;</span><span style="color:#a3be8c;">Y-m-d</span><span>&#39;</span><span style="color:#a3be8c;">)}</span><span>&quot; . PHP_EOL;
+</span><span style="color:#96b5b4;">echo </span><span>$</span><span style="color:#bf616a;">product</span><span>-&gt;</span><span style="color:#bf616a;">toString</span><span>();
+</span><span>
+</span><span>*** </span><span style="color:#d08770;">OUTPUT </span><span>***
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Modified name</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">2000</span><span>-</span><span style="color:#d08770;">01</span><span>-</span><span style="color:#d08770;">01</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span><span>
+</span><span>&gt; </span><span style="color:#d08770;">Name</span><span>: </span><span style="color:#d08770;">Asus</span><span> 452X
+</span><span>&gt; </span><span style="color:#d08770;">Price</span><span>: </span><span style="color:#d08770;">1024.50
+</span><span>&gt; </span><span style="color:#d08770;">Tags</span><span>: {</span><span style="color:#d08770;">computer</span><span>, </span><span style="color:#d08770;">asus</span><span>}
+</span><span>&gt; </span><span style="color:#d08770;">Release date</span><span>: &lt;</span><span style="color:#d08770;">b</span><span>&gt;</span><span style="color:#d08770;">2000</span><span>-</span><span style="color:#d08770;">01</span><span>-</span><span style="color:#d08770;">01</span><span>&lt;/</span><span style="color:#d08770;">b</span><span>&gt;
+</span></code></pre>
+<p>The ‘&amp;’ operator is used to get a value by reference, which means we are modifying the original value instead of
+creating a copy of this element (this is the standard behaviour for primitive types).</p>
+<p>The point of Data Transfer Objects (DTOs) is to have immutable objects. Regarding the previous snippet, we have two
+alternatives.</p>
+<p>On the one hand, is to make private the properties and implement getters, then, in the getter use the clone keyword.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#b48ead;">private</span><span> \</span><span style="color:#d08770;">DateTimeImmutable </span><span>$</span><span style="color:#bf616a;">releaseDate</span><span>;
+</span><span>
+</span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">releaseDate</span><span>(): \</span><span style="color:#d08770;">DateTimeImmutable
+</span><span>{
+</span><span>    </span><span style="color:#b48ead;">return clone </span><span>$</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">releaseDate</span><span>; </span><span style="color:#a7adba;">// Notice the &#39;clone&#39; 👀
+</span><span>}
+</span><span>
+</span><span>---
+</span><span>
+</span><span style="color:#a7adba;">// 🚨 Error - Only variables should be assigned by reference
+</span><span style="color:#a7adba;">// $date = &lt;b&gt;&amp;&lt;/b&gt;$product-&gt;releaseDate();
+</span></code></pre>
+<p>On the other hand, is about a static analyzer code library (such as Psalm), it will complain if you are not taking into
+account the PHPDoc that you define.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#a7adba;">/** @psalm-immutable */
+</span><span style="color:#b48ead;">final  class </span><span style="color:#d08770;">ProductTransfer
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public function </span><span style="color:#96b5b4;">__construct</span><span style="color:#343d46;">(
+</span><span style="color:#343d46;">        </span><span style="color:#d08770;">public </span><span style="color:#b48ead;">string </span><span>$</span><span style="color:#bf616a;">name</span><span style="color:#343d46;">,
+</span><span style="color:#343d46;">        </span><span style="color:#a7adba;">//  ...
+</span><span style="color:#343d46;">    ) {}
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#a7adba;">// ...
+</span><span style="color:#343d46;">}
+</span><span>
+</span><span>---
+</span><span>
+</span><span style="color:#a7adba;">// 🚨 Error - InaccessibleProperty Product::$name is marked readonly
+</span><span style="color:#a7adba;">// $product-&gt;name = &#39;Acer FC-288&#39;;
+</span></code></pre>
+<p>As you can see, having the <em>@psalm-immutable</em> on your immutable classes you don’t need to worry about any of this
+(cloning or getters), and you can even leave your properties public without any fear because they are write-only.</p>
+<h2 id="recommendations">Recommendations</h2>
+<ul>
+<li>Use <em>\DateTimeImmutable</em> over <em>\DateTime</em></li>
+<li>Encourage immutability for your <a href="https://codete.com/blog/value-objects/">Value Objects</a>
+&amp; <a href="https://en.wikipedia.org/wiki/Data_transfer_object">Data Transfer Objects</a></li>
+<li>Don’t use the ‘&amp;’ character</li>
+<li>Introduce a static analyzer tool in your projects (as Psalm or PHPStan)</li>
+</ul>
+<div class="separator"></div>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://php.chemaclass.com/technical-skills/immutability.html">PHP best practices | Chemaclass</a></li>
+<li><a href="https://www.interviewcake.com/concept/java/mutable">Mutable vs Immutable Objects | InterviewCake</a></li>
+<li><a href="https://tommikaikkonen.github.io/impure-to-pure/">From Impure to Pure Code | Tommi Kaikkonen</a></li>
+<li><a href="https://stackoverflow.com/a/51458159/4988034">Entity vs DTO | StackOverflow</a></li>
+</ul>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

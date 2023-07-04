@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>Declaring array structures in PHP | JesusValera</title>
+
+
+
+<meta property="og:title" content="Declaring array structures in PHP">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="In PHP is not possible to define explicitly the types of your arrays, but using PHPDoc + static analysers (PHPStan or Psalm) we can do it. Here is how">
+<meta property="og:description" content="In PHP is not possible to define explicitly the types of your arrays, but using PHPDoc + static analysers (PHPStan or Psalm) we can do it. Here is how">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/declaring-array-structures-in-php/">
+<meta property="og:url" content="https://jesusvalerareales.com/declaring-array-structures-in-php/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2023-02-20T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "In PHP is not possible to define explicitly the types of your arrays, but using PHPDoc + static analysers (PHPStan or Psalm) we can do it. Here is how",
+  "url": "https://jesusvalerareales.com/declaring-array-structures-in-php/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Declaring array structures in PHP"
+  
+    
+    
+      "datePublished":"2023-02-20T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/declaring-array-structures-in-php/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">Declaring array structures in PHP</h1>
+    <h2 class="post-subtitle"></h2>
+    <small>
+      <time datetime="2023-02-20" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        February 20, 2023 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        8 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <p><img src="/images/2023-02-20/1.png" alt="statue-people-with-a-string-and-a-cat" /></p>
+<span id="continue-reading"></span>
+<p>Unfortunately, it is not possible to define explicit array types as other programming languages do such as Java:</p>
+<pre data-lang="java" style="background-color:#eff1f5;color:#4f5b66;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#d08770;">List</span><span>&lt;</span><span style="color:#d08770;">User</span><span>&gt; users = </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">ArrayList</span><span>&lt;&gt;();
+</span></code></pre>
+<p>There have been some attempts to achieve that, one of the most recent ones was done by <strong>Nikita Popov</strong> in
+this <a href="https://github.com/PHPGenerics/php-generics-rfc/issues/45">pull request</a>, sadly, the conclusion was regarding the
+current PHP status it is not possible, it would require rewriting a huge amount of code and some of them are very
+critical.</p>
+<p>Hopefully, some tools like <strong>PHPStan</strong> or <strong>Psalm</strong> help us to analyze the code statically, which means, they do not
+execute but check the code for inconsistencies based on PHP comments.</p>
+<p>There are 3 different ways to define the type of elements in a PHP array:</p>
+<ol>
+<li>Legacy way: <code>User[]</code></li>
+<li>List Shape: <code>array&lt;int,mixed&gt;</code> &amp; <code>list&lt;mixed&gt;</code></li>
+<li>Object Shape: <code>array{0:int, foo:?string, bar:mixed}</code></li>
+</ol>
+<h2 id="the-legacy-way">The Legacy way</h2>
+<p>This is a fashioned way to define a list of elements from a certain type, the problem is it becomes ambiguous, and
+clients that use this kind of list cannot know if keys are integers, floats or strings.
+Also, static analyzers will not fail if you try to get an element by key with an incorrect type, in these scenarios, I
+would suggest using <code>array&lt;int,mixed&gt;</code>.</p>
+<p>In the end, the more explicit, the better.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> User[] $users */
+</span><span style="color:#bf616a;">$users </span><span>= [ ... ];
+</span><span>
+</span><span style="color:#a7adba;"># Are keys auto-incremental integers, random numbers, maybe strings... ?
+</span><span style="color:#bf616a;">$firstUser </span><span>= </span><span style="color:#bf616a;">$users</span><span>[ ? ];
+</span><span>
+</span><span style="color:#a7adba;"># <b>Static analyzers won't complain</b> if you use an incorrect type 🤕
+</span></code></pre>
+<h1 id="list-shape">List Shape</h1>
+<p>We use lists when we have an array of elements with the same type.<br>
+To do that, we use the <strong>diamond syntax</strong> to declare the types of the key and the value: <code>array&lt;int,mixed&gt;</code>. There is a very handy shortcut when the key is an auto-incremental integer: <code>list&lt;mixed&gt;</code>.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> array&lt;string, User&gt; $users */
+</span><span style="color:#bf616a;">$users </span><span>= [
+</span><span>    '</span><span style="color:#a3be8c;">jesus</span><span>' =&gt; </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">User</span><span>('</span><span style="color:#a3be8c;">Jesus Valera</span><span>'),
+</span><span>    '</span><span style="color:#a3be8c;">chema</span><span>' =&gt; </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">User</span><span>('</span><span style="color:#a3be8c;">Chema Valera</span><span>'),
+</span><span>];
+</span><span>
+</span><span style="color:#bf616a;">$userJesus </span><span>= </span><span style="color:#bf616a;">$users</span><span>['</span><span style="color:#a3be8c;">jesus</span><span>'];
+</span><span style="color:#bf616a;">$userChema </span><span>= </span><span style="color:#bf616a;">$users</span><span>['</span><span style="color:#a3be8c;">chema</span><span>'];
+</span><span>
+</span><span style="color:#bf616a;">$users</span><span>[</span><span style="color:#d08770;">0</span><span>]; </span><span style="color:#a7adba;"># ERROR: "Offset 0 does not exist on array&lt;string, User&gt;"
+</span><span>
+</span><span>---
+</span><span>
+</span><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> list&lt;User&gt; $users */
+</span><span style="color:#bf616a;">$users </span><span>= [ ... ];
+</span><span>
+</span><span style="color:#bf616a;">$firstUser </span><span>= </span><span style="color:#96b5b4;">reset</span><span>(</span><span style="color:#bf616a;">$users</span><span>);
+</span><span style="color:#bf616a;">$lastUser </span><span>= </span><span style="color:#96b5b4;">end</span><span>(</span><span style="color:#bf616a;">$users</span><span>);
+</span></code></pre>
+<h2 id="object-shape">Object Shape</h2>
+<p>We use object shape when the array is not a collection of objects but a map which holds information.<br>
+To do that, we use the <strong>curly bracket syntax</strong> and define the key name and the type, we can split by commas if there are multiple elements: <code>array{foo:int, bar:string}</code>.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> array{id:int, birthdate:DateTimeImmutable} */
+</span><span style="color:#bf616a;">$additionalInfo </span><span>= [ ... ];
+</span><span>
+</span><span style="color:#bf616a;">$id </span><span>= </span><span style="color:#bf616a;">$additionalInfo</span><span>['</span><span style="color:#a3be8c;">id</span><span>']; </span><span style="color:#a7adba;"># int
+</span><span style="color:#bf616a;">$birthdate </span><span>= </span><span style="color:#bf616a;">$additionalInfo</span><span>['</span><span style="color:#a3be8c;">birthdate</span><span>']; </span><span style="color:#a7adba;"># DateTimeImmutable
+</span></code></pre>
+<div class="separator"></div>
+<p>Example of a User class that holds two arrays: a list and an object shape.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#b48ead;">final class </span><span style="color:#d08770;">User
+</span><span style="color:#343d46;">{
+</span><span style="color:#343d46;">    </span><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> list&lt;Comment&gt; */
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public </span><span style="color:#d08770;">readonly </span><span style="color:#b48ead;">array </span><span style="color:#bf616a;">$comments</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">
+</span><span style="color:#343d46;">    </span><span style="color:#a7adba;">/** </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> array{id:int, birthdate:DateTimeImmutable} */
+</span><span style="color:#343d46;">    </span><span style="color:#b48ead;">public </span><span style="color:#d08770;">readonly </span><span style="color:#b48ead;">array </span><span style="color:#bf616a;">$additionalInfo</span><span style="color:#343d46;">;
+</span><span style="color:#343d46;">}
+</span></code></pre>
+<p>There are multiple advantages when using these PHP comments, not only provide better feedback on the array shape to the developers but IDEs will suggest auto-completion when iterating on individual elements!</p>
+<div class="separator"></div>
+<p>Of course, it is possible to represent any complex array structure in PHP with these PHP comments. Example:</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#a7adba;">/**
+</span><span style="color:#a7adba;"> * </span><span style="color:#b48ead;">@var</span><span style="color:#a7adba;"> list&lt;
+</span><span style="color:#a7adba;"> *   array{
+</span><span style="color:#a7adba;"> *     uuid?: string,
+</span><span style="color:#a7adba;"> *     content: array{name:string, foo:?stdClass},
+</span><span style="color:#a7adba;"> *   }
+</span><span style="color:#a7adba;"> * &gt; $array
+</span><span style="color:#a7adba;"> */
+</span><span style="color:#bf616a;">$array </span><span>= [
+</span><span>    </span><span style="color:#d08770;">0 </span><span>=&gt; [
+</span><span>        '</span><span style="color:#a3be8c;">uuid</span><span>' =&gt; '</span><span style="color:#a3be8c;">XXXX-XXX-XXX-XXXX</span><span>',
+</span><span>        '</span><span style="color:#a3be8c;">content</span><span>' =&gt; [
+</span><span>            '</span><span style="color:#a3be8c;">name</span><span>' =&gt; '</span><span style="color:#a3be8c;">str</span><span>',
+</span><span>            '</span><span style="color:#a3be8c;">foo</span><span>' =&gt; </span><span style="color:#d08770;">null</span><span>,
+</span><span>        ],
+</span><span>    ],
+</span><span>    </span><span style="color:#d08770;">1 </span><span>=&gt; [
+</span><span>        '</span><span style="color:#a3be8c;">content</span><span>' =&gt; [
+</span><span>            '</span><span style="color:#a3be8c;">name</span><span>' =&gt; '</span><span style="color:#a3be8c;">str</span><span>',
+</span><span>            '</span><span style="color:#a3be8c;">foo</span><span>' =&gt; </span><span style="color:#b48ead;">new </span><span style="color:#d08770;">stdClass</span><span>(),
+</span><span>        ],
+</span><span>    ],
+</span><span>    </span><span style="color:#a7adba;">// ...
+</span><span>];
+</span></code></pre>
+<blockquote>
+<p>We can use the PHP comments on arrays anywhere (class properties, function params, inline initialization…)</p>
+</blockquote>
+<h2 id="resources">Resources:</h2>
+<ul>
+<li><a href="https://psalm.dev/docs/annotating_code/type_syntax/array_types/">Psalm | Array Shapes</a></li>
+<li><a href="https://phpstan.org/writing-php-code/phpdoc-types#array-shapes">PHPStan | PHPDoc Types</a></li>
+</ul>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

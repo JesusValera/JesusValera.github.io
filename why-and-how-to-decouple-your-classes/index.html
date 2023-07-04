@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JesusValera</title>
+  <link rel="stylesheet" href="https://jesusvalerareales.com/main.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jesusvalerareales.com/assets/favicon-32x32.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jesusvalerareales.com/assets/favicon-16x16.jpeg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://jesusvalerareales.com/assets/apple-touch-icon.jpeg">
+
+  
+    <link type="application/atom+xml" rel="alternate" href="https://jesusvalerareales.com/atom.xml" title="JesusValera" />
+  
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2RD5QTTM8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K2RD5QTTM8');
+    </script>
+  
+
+  
+<title>Why and How to decouple your classes | JesusValera</title>
+
+
+
+<meta property="og:title" content="Why and How to decouple your classes">
+
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="description" content="Some frameworks embrace you to using their own helpers, but this has some negative impact on your code and we will take a look at it in this post.">
+<meta property="og:description" content="Some frameworks embrace you to using their own helpers, but this has some negative impact on your code and we will take a look at it in this post.">
+
+
+
+<link rel="canonical" href="https://jesusvalerareales.com/why-and-how-to-decouple-your-classes/">
+<meta property="og:url" content="https://jesusvalerareales.com/why-and-how-to-decouple-your-classes/">
+
+
+
+  <meta property="og:site_name" content="JesusValera"/>
+
+
+
+  <meta property="og:image" content="https://jesusvalerareales.com/icon.ico">
+  
+  
+
+
+
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2022-08-17T00:00:00+00:00">
+
+
+
+
+<script type="application/ld+json">
+{
+  "description": "Some frameworks embrace you to using their own helpers, but this has some negative impact on your code and we will take a look at it in this post.",
+  "url": "https://jesusvalerareales.com/why-and-how-to-decouple-your-classes/",
+  "@context":"https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why and How to decouple your classes"
+  
+    
+    
+      "datePublished":"2022-08-17T00:00:00+00:00",
+    
+    "mainEntityOfPage":{
+      "@type":"WebPage",
+      "@id":"https://jesusvalerareales.com/why-and-how-to-decouple-your-classes/"
+    },
+  
+}
+</script>
+</head>
+
+<body>
+  
+  <header>
+    <a class="profile-icon" href="https://jesusvalerareales.com">
+      <img alt="JesusValera" src="https://jesusvalerareales.com/jesus.png">
+    </a>
+    <nav>
+      
+        <a href="https://jesusvalerareales.com">Blog</a>
+      
+        <a href="https://jesusvalerareales.com/readings">Readings</a>
+      
+        <a href="https://jesusvalerareales.com/about">About</a>
+      
+    </nav>
+  </header>
+  
+
+  <main>
+    
+  <div class="post">
+    <h1 class="post-title">Why and How to decouple your classes</h1>
+    <h2 class="post-subtitle"></h2>
+    <small>
+      <time datetime="2022-08-17" class="catalogue-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 20 20">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-300.000000, -2799.000000)" fill="#AAAAAAFF">
+              <g transform="translate(56.000000, 160.000000)">
+                <path d="M262,2656 C262,2656.552 261.552,2657 261,2657 L247,2657 C246.448,2657 246,2656.552 246,2656 L246,2646 C246,2645.448 246.448,2645 247,2645 L261,2645 C261.552,2645 262,2645.448 262,2646 L262,2656 Z M262,2641 L262,2640 C262,2639.448 261.552,2639 261,2639 C260.448,2639 260,2639.448 260,2640 L260,2641 L255,2641 L255,2640 C255,2639.448 254.552,2639 254,2639 C253.448,2639 253,2639.448 253,2640 L253,2641 L248,2641 L248,2640 C248,2639.448 247.552,2639 247,2639 C246.448,2639 246,2639.448 246,2640 L246,2641 C244.895,2641 244,2641.895 244,2643 L244,2657 C244,2658.104 244.895,2659 246,2659 L262,2659 C263.105,2659 264,2658.104 264,2657 L264,2643 C264,2641.895 263.105,2641 262,2641 L262,2641 Z"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+        August 17, 2022 ·
+        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 64 64">
+          <path fill="#AAAAAAFF" d="M63.714,30.516C63.347,29.594,54.448,8,31.999,8S0.651,29.594,0.284,30.516 c-0.379,0.953-0.379,2.016,0,2.969C0.651,34.406,9.55,56,31.999,56s31.348-21.594,31.715-22.516 C64.093,32.531,64.093,31.469,63.714,30.516z M31.999,40c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.417,40,31.999,40z"></path>
+        </svg>
+        3 mins
+      </time>
+    </small>
+    <div class="post-line"></div>
+    <p><img src="/images/2022-08-17/1.png" alt="caravaca-fuentes-marques-1" /></p>
+<span id="continue-reading"></span>
+<p>There are some ways to couple your code, some frameworks like Laravel embrace you to do using their own <em>façades</em> or
+even using <em>ORM</em> as <em>ActiveRecord</em>, but this is also possible using PHP native methods like <code>time()</code> beyond others.</p>
+<p>Unfortunately, in the long run, if you don't invert the dependencies, the code will get messy faster/easier, hurting
+your application. To avoid this, you must write tests. Writing tests help you realize how coupled is your business logic
+to infrastructure code.</p>
+<h2 id="examples-of-classes-that-should-be-decoupled">Examples of classes that should be decoupled</h2>
+<h3 id="belongs-to-the-programming-language-itself-like">Belongs to the Programming language itself like</h3>
+<ul>
+<li>I/O functions like <code>fopen()</code>, <code>file_exists()</code>, <code>file_put_contents()</code>…</li>
+<li>Network related like <code>curl_init()</code>, <code>http_response_code()</code>, <code>setcookie()</code>…</li>
+<li>Relative to time like <code>date()</code>, <code>time()</code>, <code>microtime()</code>…</li>
+<li>System like <code>getenv()</code>, <code>exec()</code>, <code>system()</code>…</li>
+</ul>
+<h3 id="belongs-to-the-infrastructure-code-like">Belongs to the infrastructure code like</h3>
+<ul>
+<li>Framework classes like Laravel Façades</li>
+<li>Database (Active Record or raw queries instead of <code>Repository</code> pattern)</li>
+<li>Third-party services like <code>Monolog</code>, <code>Mandrill</code>, <code>Salesforce</code>…</li>
+</ul>
+<h2 id="decoupling-a-real-example">Decoupling a real example</h2>
+<p>For the next example, let’s try to use a Laravel facade and a PHP function.</p>
+<p>Imagine we have the following service, and we really want to invert the dependencies. As you can see, we have the
+<code>trans()</code> facade and the <code>date()</code> PHP function.</p>
+<p>namespace Infrastructure;</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Infrastructure;
+</span><span>
+</span><span>final class WelcomeController
+</span><span>{
+</span><span>    /**
+</span><span>     * Output: &quot;hello {$name} @ {Y-m-d}&quot;
+</span><span>     */
+</span><span>    public function __invoke(string $name): string
+</span><span>    {
+</span><span>        return trans(&#39;messages.welcome&#39;, [
+</span><span>            &#39;name&#39; =&gt; $name,
+</span><span>            &#39;date&#39; =&gt; date(&#39;Y-m-d&#39;),
+</span><span>        ]);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>The first thing we should do is to move the <code>trans()</code> Laravel function logic to a different service, in order to do
+that, we have to introduce an interface as follows:</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Domain;
+</span><span>
+</span><span>interface TranslatorInterface
+</span><span>{
+</span><span>   function trans(string $message, string ...$placeholders): string;
+</span><span>}
+</span></code></pre>
+<p>And we can place in this class the original Laravel implementation.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Infrastructure;
+</span><span>
+</span><span>final class LaravelTranslator implements TranslatorInterface
+</span><span>{
+</span><span>   public function trans(string $message, string ...$placeholders)
+</span><span>   {
+</span><span>      return trans($message, ...$placeholders);
+</span><span>   }
+</span><span>}
+</span></code></pre>
+<p>So, from this point on, we are able to switch the translator class to our Laravel custom one or a third-party one by
+implementing the <code>TranslatorInterface</code>.</p>
+<p>Finally, we can inject the new <code>Translator</code> service in our <code>Controller</code> defining in the service container which
+implementation we want to resolve when the framework faces the <code>TranslatorInterface</code> in the constructor.</p>
+<p>namespace Infrastructure;</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Infrastructure;
+</span><span>
+</span><span>final class WelcomeController
+</span><span>{
+</span><span>    public function __construct(
+</span><span>        private TranslatorInterface $translator,
+</span><span>    ) {}
+</span><span>
+</span><span>    public function __invoke(Request $request): void
+</span><span>    {
+</span><span>        $name = $request-&gt;get(&#39;name&#39;);
+</span><span>        return $this-&gt;translator-&gt;trans(
+</span><span>            &#39;messages.welcome&#39;,
+</span><span>            [&#39;name&#39; =&gt; $name, &#39;date&#39; =&gt; date(&#39;Y-m-d&#39;)],
+</span><span>       );
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>The next step is to do the same but with the <code>date()</code> method.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Domain;
+</span><span>
+</span><span>interface DateInterface
+</span><span>{
+</span><span>   function toString(): string;
+</span><span>}
+</span></code></pre>
+<p>And the PHP implementation:</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Infrastructure;
+</span><span>
+</span><span>final class SystemDate implements DateInterface
+</span><span>{
+</span><span>    public function toString(): string
+</span><span>    {
+</span><span>        return date(&#39;Y-m-d&#39;);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Let’s do the same as we did previously, but this time we can inject our own <code>SystemDate</code> implementation through the
+<code>DateInterface</code> interface.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Infrastructure;
+</span><span>
+</span><span>final class WelcomeController
+</span><span>{
+</span><span>    public function __construct(
+</span><span>        private TranslatorInterface $translatorService,
+</span><span>        private DateInterface $date,
+</span><span>    ) {}
+</span><span>
+</span><span>    public function __invoke(Request $request): void
+</span><span>    {
+</span><span>        $name = $request-&gt;get(&#39;name&#39;);
+</span><span>        return $this-&gt;translatorService-&gt;trans(
+</span><span>            &#39;messages.welcome&#39;,
+</span><span>            [&#39;name&#39; =&gt; $name, &#39;date&#39; =&gt; $this-&gt;date-&gt;toString()],
+</span><span>       );
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<blockquote>
+<p>⚠️ Do not forget to add both mapping interfaces between <code>TranslatorInterface</code> and <code>LaravelTranslator</code>, and
+<code>DateInterface</code> and <code>SystemDate</code> in the <code>ServiceProvider</code> class.</p>
+</blockquote>
+<p>Finally, we are up to creating our controller test.</p>
+<pre data-lang="php" style="background-color:#eff1f5;color:#4f5b66;" class="language-php "><code class="language-php" data-lang="php"><span>namespace Test/Infrastructure;
+</span><span>
+</span><span>final class WelcomeControllerTest
+</span><span>{
+</span><span>    public function test_invoke(): void
+</span><span>    {
+</span><span>        $translate = new LaravelTranslator();
+</span><span>
+</span><span>        $date = $this-&gt;createStub(DateInterface::class);
+</span><span>        $date-&gt;method(&#39;toString&#39;)-&gt;willReturn(&#39;2022-02-22&#39;);
+</span><span>
+</span><span>        $request = $this-&gt;createStub(Request::class);
+</span><span>        $request-&gt;method(&#39;get&#39;)-&gt;willReturn(&#39;World&#39;);
+</span><span>
+</span><span>        $controller = new WelcomeController($translate, $date);
+</span><span>        $response = $controller-&gt;__invoke($request);
+</span><span>
+</span><span>        self::assertSame(&#39;hello World @ 2022-02-22&#39;, $response);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><img src="/images/2022-08-17/2.png" alt="caravaca-fuentes-marques-2" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+    <a href="#" class="top">Top</a>
+    
+  </div>
+
+  </main>
+
+  
+  <footer>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <span style="margin-right: 6px">
+        &copy; <time datetime="2023">2023</time> - Jesus Valera Reales
+      </span>
+      <a href="https://github.com/JesusValera" style="display: inline-block" target="_blank">
+        <img alt="github" src="/about/github.svg" style="margin: auto">
+      </a>
+      <a href="https://www.linkedin.com/in/jesusvalera/" style="display: inline-block" target="_blank">
+        <img alt="linkedin" src="/about/linkedin.svg" style="margin: auto">
+      </a>
+    </div>
+  </footer>
+  
+</body>
+</html>

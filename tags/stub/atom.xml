@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>JesusValera - Stub</title>
+	<subtitle>JesusValera&#x27;s page</subtitle>
+	<link href="https://jesusvalerareales.com/tags/stub/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://jesusvalerareales.com"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2020-06-11T00:00:00+00:00</updated>
+	<id>https://jesusvalerareales.com/tags/stub/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Testing with Test Doubles?</title>
+		<published>2020-06-11T00:00:00+00:00</published>
+		<updated>2020-06-11T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://jesusvalerareales.com/testing-with-test-doubles/" type="text/html"/>
+		<id>https://jesusvalerareales.com/testing-with-test-doubles/</id>
+		<content type="html">&lt;img alt=&quot;parliament-budapest&quot; src=&quot;&#x2F;images&#x2F;2020-06-11&#x2F;1.png&quot; style=&quot;width: 100%&quot;&#x2F;&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h2 id=&quot;test-doubles&quot;&gt;Test Doubles&lt;&#x2F;h2&gt;
+&lt;p&gt;A Test Double is an object that can stand-in for a real object in a test, similar to how a stunt double stands in for an
+actor in a movie.&lt;&#x2F;p&gt;
+&lt;p&gt;As I wrote in &lt;a href=&quot;&#x2F;the-importance-of-tests-in-our-software&quot;&gt;“The importance of the Tests in our Software”&lt;&#x2F;a&gt;, there are
+several types of tests. They are also known as Test Doubles instead of “Mocks”.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;the-five-types-of-test-doubles-are&quot;&gt;The five types of Test Doubles are:&lt;&#x2F;h3&gt;
+&lt;img alt=&quot;test-types&quot; src=&quot;&#x2F;images&#x2F;2020-06-11&#x2F;2.png&quot; style=&quot;width: 90%&quot;&#x2F;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dummy&lt;&#x2F;strong&gt;: It is used as a placeholder when an argument needs to be filled in.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Stub&lt;&#x2F;strong&gt;: It provides fake data to the SUT (System Under Test).&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Spy&lt;&#x2F;strong&gt;: It records information about how the class is being used.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Mock&lt;&#x2F;strong&gt;: It defines an expectation of how it will be used. It will cause failure if the expectation isn’t met.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Fake&lt;&#x2F;strong&gt;: It is an actual implementation of the contract but is unsuitable for production.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;2020-06-11&#x2F;3.png&quot; alt=&quot;bodo-istvan&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The snippets are a pseudo-language based on a mix of PHP &amp;amp; Java.&lt;br&gt;
+The idea is to make it understandable to everyone familiar with OOP.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;dummy&quot;&gt;Dummy&lt;&#x2F;h2&gt;
+&lt;p&gt;The dummies are objects that our SUT depends on, but they are never used. We don’t care about them because they are
+irrelevant to the test scope.&lt;&#x2F;p&gt;
+&lt;p&gt;Let’s imagine we have a service with a dependency that is irrelevant in the current test. We can perform something
+similar to the following snippet:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public final &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;OUTPUT &lt;&#x2F;span&gt;&lt;span&gt;= &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;something&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#bf616a;color:#eff1f5;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Dependency &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;dependency): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; &amp;#39;dependency&amp;#39; won&amp;#39;t interfere in the expected result.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; self::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;OUTPUT&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ServiceTest &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extends &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;TestCase
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;testFormat&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Notice as the parameter is irrelevant.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; result &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Service&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;()).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;null&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        self.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;assertSame&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Service&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;OUTPUT&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;, result);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;stub&quot;&gt;Stub&lt;&#x2F;h2&gt;
+&lt;p&gt;A stub is an object which returns fake data.&lt;&#x2F;p&gt;
+&lt;p&gt;Let’s imagine our service depends on a user model, then the service does something, and finally, it returns the user’s
+UUID.
+We can create a stub object with fake values to assert the service works as expected.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;doSomething&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserModelInterface &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;user&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Int
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;* Do things *&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; user.uuid;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;To test this service, we can create a stub of the user and check if the response is what we were expecting.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ServiceTest &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extends &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;TestCase
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;testDoSomething&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; The service needs a implementation from `UserModelInterface`.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; uuid &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Service&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;()).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;doSomething&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserStub&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;());
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        self.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;assertStringContainsString&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0000-000-000-00001&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;, uuid);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;interface &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserModelInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getUuid&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserStub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;implements &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;UserModelInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getUuid&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0000-000-000-00001&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;spy&quot;&gt;Spy&lt;&#x2F;h2&gt;
+&lt;p&gt;A test spy is an object capable of capturing indirect output and providing indirect input as needed. The indirect output
+is something we cannot directly observe.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;We can achieve that by extending the original class and saving the function params as class arguments.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;In the following snippet, we can know exactly how many times the log() method has been called, as well as the content of
+the messages.
+The point of this spy is to have much more knowledge of the internal object state in exchange for deeper coupling, which
+could be problematic in the future because it makes our tests more fragile.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;interface &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;LoggerInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;log&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;message&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;LoggerSpy &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;implements &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;LoggerInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Array&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;&amp;gt; messages &lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; [];
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;log&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;message&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;.messages.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;add&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(message);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserNotifier
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;__construct&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;private &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;LoggerInterface &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;logger&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    ) {}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;registerUser&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserModelInterface &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;user&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;.logger.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;log&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Notifying the user: {user.name()}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The following would be the implementation of the spy in a test:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserNotifierTest &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extends &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;TestCase
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;testLogMessage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;LoggerSpy&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; logger &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;LoggerSpy&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserNotifier&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; notifier &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserNotifier&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(logger);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;User&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; user &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;User&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(name&lt;&#x2F;span&gt;&lt;span&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Jesus&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        notifier.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;registerUser&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(user);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        self.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;assertStringContainsString&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Notifying the user: Jesus&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            logger.messages.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;firt&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;()
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        );
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;mock&quot;&gt;Mock&lt;&#x2F;h2&gt;
+&lt;p&gt;A mock is an object that is &lt;strong&gt;capable of controlling both indirect input and output&lt;&#x2F;strong&gt;, and it has a mechanism for
+automatic &lt;strong&gt;assertion of expectations and results&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Imagine the ShoppingCart class calls the database and performs big and complex functions. For this reason, we cannot
+unit test this class correctly due to the coupling.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ShoppingService
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;calculateAmount&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Lines &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;lines&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Float
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; amount &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;** Complex code to test, we need a mock for this class *&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Array&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Line&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;&amp;gt; linesTransformed &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ShoppingCart&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;transform&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(lines);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;foreach &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Line&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; line &lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; linesTransformed) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            amount &lt;&#x2F;span&gt;&lt;span&gt;+=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; line.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;price&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; amount;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;In this kind of situations, mocking is the best option if we cannot modify this class easily (maybe the class is used in
+different parts), and it could take too long to refactorize.&lt;&#x2F;p&gt;
+&lt;p&gt;My favourite solution for this is “&lt;a href=&quot;https:&#x2F;&#x2F;refactoring.guru&#x2F;extract-method&quot;&gt;extract method refactoring&lt;&#x2F;a&gt;”:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ShoppingService &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Not final anymore because of the mock!!
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;calculateAmount&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Lines &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;lines&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Float
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; amount &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;** Complex code to test, we need a mock for this class *&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Array&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Line&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;&amp;gt; linesTransformed &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getShoppingCart&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(lines);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;foreach &lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Line&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; line &lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; linesTransformed) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            amount &lt;&#x2F;span&gt;&lt;span&gt;+=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; line.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;price&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; amount;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;**
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;     * Protected to have access in the mock object.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;     *
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;     * @codeCoverageIgnore
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;     *&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;protected&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getShoppingCart&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Lines &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;lines&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Array
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ShoppingCart&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;transform&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(lines);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And this is the mock:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;LoggerTest &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extends &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;TestCase
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;testMovieBudgetFactory&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;MockShoppingService&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; service &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;createMock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;ShoppingService&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;method&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;getShoppingCart&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Overriding the method.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;            .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;willReturn&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;([&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;100&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;200&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;300&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;]);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Lines&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; stubLines &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Lines&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;null&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; totalAmount &lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; service.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;calculateAmount&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(stubLines);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        self.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;assertEquals&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;600&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;, totalAmount);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This methodology is very handy when we want to refactor a class step-by-step, but we could go further and extract that
+logic in a new class, then when the class &lt;code&gt;ShoppingService&lt;&#x2F;code&gt; is created, just injecting the dependency via constructor
+would help us to separate the logic.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;fake&quot;&gt;Fake&lt;&#x2F;h2&gt;
+&lt;p&gt;A fake is a simpler implementation of real objects.&lt;&#x2F;p&gt;
+&lt;p&gt;Fakes are used when we want to test an infrastructural class, in other words, fakes are for the classes which are beyond
+our application limit (repositories or queues, for example).&lt;&#x2F;p&gt;
+&lt;p&gt;As you can observe in the first picture (the diagram), a fake is not in the hierarchical line within the dummy, stub,
+spy or mock. This is because a fake can behave like a dummy, stub, spy or mock for our concrete use case.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;interface &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserRepositoryInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getUserById&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uuid&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;User&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;final class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;FakeUserRepository &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;implements &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;UserRepositoryInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt; function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getUserById&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;String &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uuid&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;UserModel
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;User&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;(uuid, &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Jesus&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;[&amp;#39;ADMIN_ROLE&amp;#39;]&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;    }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#343d46;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;So, when we use this fake repository, we will receive a stub User.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;final-thoughts&quot;&gt;Final thoughts&lt;&#x2F;h3&gt;
+&lt;p&gt;We must know the scope of the code we are going to test to get coupled as less as possible.
+That means if we have to pick a test double, first, we must know if the test is within our boundaries or not, if not, a
+fake is the best option, otherwise, my recommendation is to pick the corresponding test with the least knowledge as
+possible: dummy, stub, spy or mock (in that order).&lt;&#x2F;p&gt;
+&lt;div class=&quot;separator&quot;&gt;&lt;&#x2F;div&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Chemaclass&#x2F;php-best-practices&#x2F;blob&#x2F;master&#x2F;technical-skills&#x2F;testing.md&quot;&gt;Best practices — Testing | Chemaclass Github&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;matthiasnoback.nl&#x2F;2014&#x2F;07&#x2F;test-doubles&#x2F;&quot;&gt;A better PHP testing experience | Matthias Noback&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;code.tutsplus.com&#x2F;tutorials&#x2F;all-about-mocking-with-phpunit--net-27252&quot;&gt;All about Mocking with PHPUnit | TutsPlus&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.cleancoder.com&#x2F;uncle-bob&#x2F;2014&#x2F;05&#x2F;14&#x2F;TheLittleMocker.html&quot;&gt;The Little Mocker | Clean Coder&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;testing.googleblog.com&#x2F;2013&#x2F;07&#x2F;testing-on-toilet-know-your-test-doubles.html&quot;&gt;Testing on the Toilet | Google Testing Blog&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;martinfowler.com&#x2F;bliki&#x2F;TestDouble.html&quot;&gt;TestDouble | Martin Fowler&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;martinfowler.com&#x2F;bliki&#x2F;GivenWhenThen.html&quot;&gt;GivenWhenThen | Martin Fowler&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+</feed>

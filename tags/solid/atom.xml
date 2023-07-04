@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>JesusValera - Solid</title>
+	<subtitle>JesusValera&#x27;s page</subtitle>
+	<link href="https://jesusvalerareales.com/tags/solid/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://jesusvalerareales.com"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2022-08-17T00:00:00+00:00</updated>
+	<id>https://jesusvalerareales.com/tags/solid/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Why and How to decouple your classes</title>
+		<published>2022-08-17T00:00:00+00:00</published>
+		<updated>2022-08-17T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://jesusvalerareales.com/why-and-how-to-decouple-your-classes/" type="text/html"/>
+		<id>https://jesusvalerareales.com/why-and-how-to-decouple-your-classes/</id>
+		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;2022-08-17&#x2F;1.png&quot; alt=&quot;caravaca-fuentes-marques-1&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+&lt;p&gt;There are some ways to couple your code, some frameworks like Laravel embrace you to do using their own &lt;em&gt;façades&lt;&#x2F;em&gt; or
+even using &lt;em&gt;ORM&lt;&#x2F;em&gt; as &lt;em&gt;ActiveRecord&lt;&#x2F;em&gt;, but this is also possible using PHP native methods like &lt;code&gt;time()&lt;&#x2F;code&gt; beyond others.&lt;&#x2F;p&gt;
+&lt;p&gt;Unfortunately, in the long run, if you don&#x27;t invert the dependencies, the code will get messy faster&#x2F;easier, hurting
+your application. To avoid this, you must write tests. Writing tests help you realize how coupled is your business logic
+to infrastructure code.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;examples-of-classes-that-should-be-decoupled&quot;&gt;Examples of classes that should be decoupled&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;belongs-to-the-programming-language-itself-like&quot;&gt;Belongs to the Programming language itself like&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;I&#x2F;O functions like &lt;code&gt;fopen()&lt;&#x2F;code&gt;, &lt;code&gt;file_exists()&lt;&#x2F;code&gt;, &lt;code&gt;file_put_contents()&lt;&#x2F;code&gt;…&lt;&#x2F;li&gt;
+&lt;li&gt;Network related like &lt;code&gt;curl_init()&lt;&#x2F;code&gt;, &lt;code&gt;http_response_code()&lt;&#x2F;code&gt;, &lt;code&gt;setcookie()&lt;&#x2F;code&gt;…&lt;&#x2F;li&gt;
+&lt;li&gt;Relative to time like &lt;code&gt;date()&lt;&#x2F;code&gt;, &lt;code&gt;time()&lt;&#x2F;code&gt;, &lt;code&gt;microtime()&lt;&#x2F;code&gt;…&lt;&#x2F;li&gt;
+&lt;li&gt;System like &lt;code&gt;getenv()&lt;&#x2F;code&gt;, &lt;code&gt;exec()&lt;&#x2F;code&gt;, &lt;code&gt;system()&lt;&#x2F;code&gt;…&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;belongs-to-the-infrastructure-code-like&quot;&gt;Belongs to the infrastructure code like&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Framework classes like Laravel Façades&lt;&#x2F;li&gt;
+&lt;li&gt;Database (Active Record or raw queries instead of &lt;code&gt;Repository&lt;&#x2F;code&gt; pattern)&lt;&#x2F;li&gt;
+&lt;li&gt;Third-party services like &lt;code&gt;Monolog&lt;&#x2F;code&gt;, &lt;code&gt;Mandrill&lt;&#x2F;code&gt;, &lt;code&gt;Salesforce&lt;&#x2F;code&gt;…&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;decoupling-a-real-example&quot;&gt;Decoupling a real example&lt;&#x2F;h2&gt;
+&lt;p&gt;For the next example, let’s try to use a Laravel facade and a PHP function.&lt;&#x2F;p&gt;
+&lt;p&gt;Imagine we have the following service, and we really want to invert the dependencies. As you can see, we have the
+&lt;code&gt;trans()&lt;&#x2F;code&gt; facade and the &lt;code&gt;date()&lt;&#x2F;code&gt; PHP function.&lt;&#x2F;p&gt;
+&lt;p&gt;namespace Infrastructure;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Infrastructure;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;final class WelcomeController
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &#x2F;**
+&lt;&#x2F;span&gt;&lt;span&gt;     * Output: &amp;quot;hello {$name} @ {Y-m-d}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;     *&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;    public function __invoke(string $name): string
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        return trans(&amp;#39;messages.welcome&amp;#39;, [
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;#39;name&amp;#39; =&amp;gt; $name,
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;#39;date&amp;#39; =&amp;gt; date(&amp;#39;Y-m-d&amp;#39;),
+&lt;&#x2F;span&gt;&lt;span&gt;        ]);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The first thing we should do is to move the &lt;code&gt;trans()&lt;&#x2F;code&gt; Laravel function logic to a different service, in order to do
+that, we have to introduce an interface as follows:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Domain;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;interface TranslatorInterface
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;   function trans(string $message, string ...$placeholders): string;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And we can place in this class the original Laravel implementation.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Infrastructure;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;final class LaravelTranslator implements TranslatorInterface
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;   public function trans(string $message, string ...$placeholders)
+&lt;&#x2F;span&gt;&lt;span&gt;   {
+&lt;&#x2F;span&gt;&lt;span&gt;      return trans($message, ...$placeholders);
+&lt;&#x2F;span&gt;&lt;span&gt;   }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;So, from this point on, we are able to switch the translator class to our Laravel custom one or a third-party one by
+implementing the &lt;code&gt;TranslatorInterface&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Finally, we can inject the new &lt;code&gt;Translator&lt;&#x2F;code&gt; service in our &lt;code&gt;Controller&lt;&#x2F;code&gt; defining in the service container which
+implementation we want to resolve when the framework faces the &lt;code&gt;TranslatorInterface&lt;&#x2F;code&gt; in the constructor.&lt;&#x2F;p&gt;
+&lt;p&gt;namespace Infrastructure;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Infrastructure;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;final class WelcomeController
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    public function __construct(
+&lt;&#x2F;span&gt;&lt;span&gt;        private TranslatorInterface $translator,
+&lt;&#x2F;span&gt;&lt;span&gt;    ) {}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    public function __invoke(Request $request): void
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        $name = $request-&amp;gt;get(&amp;#39;name&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;        return $this-&amp;gt;translator-&amp;gt;trans(
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;#39;messages.welcome&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;            [&amp;#39;name&amp;#39; =&amp;gt; $name, &amp;#39;date&amp;#39; =&amp;gt; date(&amp;#39;Y-m-d&amp;#39;)],
+&lt;&#x2F;span&gt;&lt;span&gt;       );
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The next step is to do the same but with the &lt;code&gt;date()&lt;&#x2F;code&gt; method.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Domain;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;interface DateInterface
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;   function toString(): string;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And the PHP implementation:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Infrastructure;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;final class SystemDate implements DateInterface
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    public function toString(): string
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        return date(&amp;#39;Y-m-d&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Let’s do the same as we did previously, but this time we can inject our own &lt;code&gt;SystemDate&lt;&#x2F;code&gt; implementation through the
+&lt;code&gt;DateInterface&lt;&#x2F;code&gt; interface.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Infrastructure;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;final class WelcomeController
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    public function __construct(
+&lt;&#x2F;span&gt;&lt;span&gt;        private TranslatorInterface $translatorService,
+&lt;&#x2F;span&gt;&lt;span&gt;        private DateInterface $date,
+&lt;&#x2F;span&gt;&lt;span&gt;    ) {}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    public function __invoke(Request $request): void
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        $name = $request-&amp;gt;get(&amp;#39;name&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;        return $this-&amp;gt;translatorService-&amp;gt;trans(
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;#39;messages.welcome&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;            [&amp;#39;name&amp;#39; =&amp;gt; $name, &amp;#39;date&amp;#39; =&amp;gt; $this-&amp;gt;date-&amp;gt;toString()],
+&lt;&#x2F;span&gt;&lt;span&gt;       );
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠️ Do not forget to add both mapping interfaces between &lt;code&gt;TranslatorInterface&lt;&#x2F;code&gt; and &lt;code&gt;LaravelTranslator&lt;&#x2F;code&gt;, and
+&lt;code&gt;DateInterface&lt;&#x2F;code&gt; and &lt;code&gt;SystemDate&lt;&#x2F;code&gt; in the &lt;code&gt;ServiceProvider&lt;&#x2F;code&gt; class.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Finally, we are up to creating our controller test.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;namespace Test&#x2F;Infrastructure;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;final class WelcomeControllerTest
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    public function test_invoke(): void
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        $translate = new LaravelTranslator();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        $date = $this-&amp;gt;createStub(DateInterface::class);
+&lt;&#x2F;span&gt;&lt;span&gt;        $date-&amp;gt;method(&amp;#39;toString&amp;#39;)-&amp;gt;willReturn(&amp;#39;2022-02-22&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        $request = $this-&amp;gt;createStub(Request::class);
+&lt;&#x2F;span&gt;&lt;span&gt;        $request-&amp;gt;method(&amp;#39;get&amp;#39;)-&amp;gt;willReturn(&amp;#39;World&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        $controller = new WelcomeController($translate, $date);
+&lt;&#x2F;span&gt;&lt;span&gt;        $response = $controller-&amp;gt;__invoke($request);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        self::assertSame(&amp;#39;hello World @ 2022-02-22&amp;#39;, $response);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;2022-08-17&#x2F;2.png&quot; alt=&quot;caravaca-fuentes-marques-2&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>
