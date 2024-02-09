@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>JesusValera - Scalability</title>
+	<subtitle>Personal blog about technology, mostly about programming languages; time to time I like to share what I learn</subtitle>
+	<link href="https://jesusvalerareales.com/tags/scalability/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://jesusvalerareales.com"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2020-03-20T00:00:00+00:00</updated>
+	<id>https://jesusvalerareales.com/tags/scalability/atom.xml</id>
+	<entry xml:lang="en">
+		<title>The importance of tests in our software</title>
+		<published>2020-03-20T00:00:00+00:00</published>
+		<updated>2020-03-20T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://jesusvalerareales.com/the-importance-of-tests-in-our-software/" type="text/html"/>
+		<id>https://jesusvalerareales.com/the-importance-of-tests-in-our-software/</id>
+		<content type="html">&lt;p&gt;A test is an empirical assertion that demonstrates the behaviour of an expected functionality from something.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;cohn-pyramid&quot;&gt;Cohn pyramid&lt;&#x2F;h2&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;2020-03-20&#x2F;4.png&quot; alt=&quot;cohn-pyramid&quot; style=&quot;width: 80%&quot;&gt;
+&lt;p&gt;There are different test types as we have just seen, even each one is focused on a particular issue from the
+application.&lt;&#x2F;p&gt;
+&lt;p&gt;At the pyramid bottom, the &lt;strong&gt;unit tests&lt;&#x2F;strong&gt; are accommodated, in the middle the &lt;strong&gt;integration&lt;&#x2F;strong&gt; ones and on the top the
+&lt;strong&gt;UI&lt;&#x2F;strong&gt; tests.&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;strong&gt;unit tests&lt;&#x2F;strong&gt; should represent the majority of them. Those tests give specific and really fast feedback to the user
+(50%-60%).&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;strong&gt;integration tests&lt;&#x2F;strong&gt; are slower than the units and are focused on complex tasks like HTTP requests, database
+connections, cache operations and other stuff which require some application load (20%-40%).&lt;&#x2F;p&gt;
+&lt;p&gt;Lastly, the &lt;strong&gt;UI tests&lt;&#x2F;strong&gt; at the pyramid top (0%-10%).&lt;&#x2F;p&gt;
+&lt;p&gt;Those tests are the most delicate, took a lot of time and they are harder to write and maintain.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;When we said they are delicate, we mean they are too coupled to the source code and a minimal change in the code could
+provoke a failing test&lt;&#x2F;li&gt;
+&lt;li&gt;They took so much time to be executed; they used to apply a crawler object, which consists of a browser emulator that
+is capable of seeing the status page, clicking on some buttons, reading any DOM element and so on. Indeed, it is
+harder to find the failure in an ‘end-to-end’ test because they are unforeseen and took more time&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;It is not the same legacy as a greenfield project.&lt;&#x2F;p&gt;
+&lt;p&gt;Depending on it, those values may vary.&lt;&#x2F;p&gt;
+&lt;p&gt;In legacy projects which are really coupled to 3rd party libraries like the database, sometimes it is really hard to
+write unit tests. The recommendation is to do the inverse, creating first integration tests to check you do not break
+something and then re-factorize the code with unit tests step by step.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;test-methodologies&quot;&gt;Test Methodologies&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;test-last&quot;&gt;Test-Last&lt;&#x2F;h3&gt;
+&lt;p&gt;This is the worst methodology and sadly the most common.&lt;&#x2F;p&gt;
+&lt;p&gt;It happens when you type the tests AFTER you wrote the production code.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;pros&quot;&gt;Pros:&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;At least you have tests (it is dangerous because you can fall into the false sensation of coverage and false
+positives…)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;cons&quot;&gt;Cons:&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;It is boring because you already have the sensation you are working on something that is already done&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;test-first&quot;&gt;Test-First&lt;&#x2F;h3&gt;
+&lt;p&gt;This methodology is when you type the tests BEFORE you wrote the production code.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;pros-1&quot;&gt;Pros:&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;This methodology focuses only on green tests&lt;&#x2F;li&gt;
+&lt;li&gt;It is great for integration tests&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;cons-1&quot;&gt;Cons:&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;You do not care so much about a good design of the tests nor the production code&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;tdd-test-driven-development&quot;&gt;TDD (test-driven development)&lt;&#x2F;h3&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;2020-03-20&#x2F;5.png&quot; alt=&quot;tdd&quot; style=&quot;width: 80%&quot;&gt;
+&lt;p&gt;This methodology is when you type the tests BEFORE you wrote the production code BUT you are refactoring the code as
+long as you are working on them.&lt;&#x2F;p&gt;
+&lt;p&gt;First, you wrote the test code getting the red light and ONLY then, you work on the implementation to get the green
+light. Afterwards, you refactor it and so on.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;cons-2&quot;&gt;Cons:&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;The sensation of slower development&lt;&#x2F;li&gt;
+&lt;li&gt;It requires an important learning curve&lt;&#x2F;li&gt;
+&lt;li&gt;Its implementation is complex in legacy codes&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;unit-test-resources&quot;&gt;Unit test resources&lt;&#x2F;h2&gt;
+&lt;p&gt;We use to say “mock” when we want to reference a test double, but there are actually five different types and mock is
+only one of them.&lt;&#x2F;p&gt;
+&lt;p&gt;It can really help you understand what you’re trying to accomplish with your test if you know about what you are doing.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;test-doubles&quot;&gt;Test doubles&lt;&#x2F;h3&gt;
+&lt;p&gt;A Test Double is any object that stands in for a real dependency in automated testing. Usually, in PHPUnit, we make test
+doubles for other classes, but you can also double built-in PHP functions or closures.&lt;&#x2F;p&gt;
+&lt;p&gt;The five types of Test Doubles are:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dummy&lt;&#x2F;strong&gt; — Used only as a placeholder when an argument needs to be filled in&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Stub&lt;&#x2F;strong&gt; — Provides fake data to the System Under Test&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Spy&lt;&#x2F;strong&gt; — Records information about how it is used and can provide that information back&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Mock&lt;&#x2F;strong&gt; — Defines an expectation on how it will be used, and with what parameters. Will cause a test to fail
+automatically if the expectation isn’t met&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Fake&lt;&#x2F;strong&gt; — An actual implementation of the contract, but is unsuitable for production&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+</feed>
